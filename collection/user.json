@@ -1,0 +1,6 @@
+{"_id":{"$oid":"5bef225745dc5c1a7c1d9094"},"email":"jojon@gmail.com","fullname":"Jojon Budiman","password":"123","role":"super","authority":["create","update","delete","blog","commerce","consult","suppy","report"]}
+{"_id":{"$oid":"5c3cda96ec75790d0c2d6cda"},"email":"dyo.pyon@gmail.com","fullname":"Hanindyo Herbowo","password":"123","role":"admin","authority":["create","update","delete","blog","commerce","consult","report","supply"]}
+{"_id":{"$oid":"5c3cdb65ec75790d0c2d6cdb"},"email":"kuda@gmail.com","fullname":"Kuda Terbang","password":"123","role":"doctor","authority":["blog","commerce","consult"]}
+{"_id":{"$oid":"5c3cdb7aec75790d0c2d6cdc"},"email":"beruang@gmail.com","fullname":"Beruang Madu","password":"123","role":"doctor","authority":["blog","commerce","consult"]}
+{"_id":{"$oid":"5c3cdb91ec75790d0c2d6cdd"},"email":"kambing@gmail.com","fullname":"Kambing Gunung","password":"123","role":"user","authority":["blog","commerce","consult"]}
+{"_id":{"$oid":"5c3cf3182129f90a5cb48c5e"},"email":"tapir@gmail.com","fullname":"Tapir Sunda","password":"123","role":"user","authority":["blog","commerce","consult"]}
