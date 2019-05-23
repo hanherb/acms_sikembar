@@ -2,15 +2,12 @@ var mongodb = require('mongodb');
 var mongo = require('./mongo-connect');
 var {buildSchema} = require('graphql');
 var mergeSchema = require('graphql-tools');
-var blogGraphql = require('../plugin/blog/blog-graphql');
-var commerceGraphql = require('../plugin/commerce/commerce-graphql');
-var consultGraphql = require('../plugin/consult/consult-graphql');
-var supplyGraphql = require('../plugin/supply/supply-graphql');
 
 var defaultSchema = buildSchema(`
 	type Query {
-		user(email: String!): Person,
+		user(_id: String!): Person,
 		users: [Person],
+		logs: [Log],
 		roles: [Role],
 		plugin(name: String!): Plugin,
 		plugins: [Plugin],
@@ -21,7 +18,27 @@ var defaultSchema = buildSchema(`
 	    fullname: String,
 	    email: String,
 	    role: String,
-	    authority: [String]
+	    authority: [String],
+	    status: String,
+	    badan_usaha: String,
+	    izin: String,
+	    generasi: String,
+	    tahapan_kegiatan: String,
+	    komoditas: String
+	    alamat_kantor: String,
+	    telepon: String,
+	    fax: String,
+	    website: String,
+	    npwp: String,
+	    lokasi_tambang: String,
+	    profile_picture: String
+  	},
+
+  	type Log {
+  		_id: String,
+  		path: String,
+  		userId: String,
+  		date: String
   	},
 
   	type Plugin {
@@ -37,6 +54,7 @@ var defaultSchema = buildSchema(`
 		updateUser(email: String!, input: PersonInput): Person,
 		createUser(input: PersonInput): Person,
 		deleteUser(email: String!): Person,
+		createLog(input: LogInput): Log,
 		updatePlugin(name: String!, input: PluginInput): Plugin
 		createPlugin(input: PluginInput): Plugin
 	},
@@ -47,8 +65,28 @@ var defaultSchema = buildSchema(`
 	    email: String,
 	    role: String,
 	    authority: [String],
-	    password: String
+	    password: String,
+	    status: String,
+	    badan_usaha: String,
+	    izin: String,
+	    generasi: String,
+	    tahapan_kegiatan: String,
+	    komoditas: String
+	    alamat_kantor: String,
+	    telepon: String,
+	    fax: String,
+	    website: String,
+	    npwp: String,
+	    lokasi_tambang: String,
+	    profile_picture: String
   	},
+
+  	input LogInput {
+  		_id: String,
+  		path: String,
+  		userId: String,
+  		date: String
+  	}
 
   	input PluginInput {
   		name: String,
@@ -58,10 +96,6 @@ var defaultSchema = buildSchema(`
 
 var schemas = [];
 schemas.push(defaultSchema);
-schemas.push(blogGraphql.schema);
-schemas.push(commerceGraphql.schema);
-schemas.push(consultGraphql.schema);
-schemas.push(supplyGraphql.schema);
 
 exports.schema = mergeSchema.mergeSchemas({
   schemas: schemas
@@ -69,26 +103,38 @@ exports.schema = mergeSchema.mergeSchemas({
 
 var users = [];
 mongo.mongoUser("find", {}, function(response) {
-	for(var i = 0; i < response.length; i++)
+	for(var i = 0; i < response.length; i++) {
+		response[i]._id = response[i]._id.toString();
 		users.push(response[i]);
+	}
+});
+
+var logs = [];
+mongo.mongoLogger("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		response[i]._id = response[i]._id.toString();
+		logs.push(response[i]);
+	}
 });
 
 var roles = [];
-mongo.mongoRole("find", {}, function(response) {
-	for(var i = 0; i < response.length; i++)
+mongo.mongoRole("find", {}, function(response) { 
+	for(var i = 0; i < response.length; i++) {
 		roles.push(response[i]);
+	}
 });
 
 var plugins = [];
 mongo.mongoPlugin("find", {}, function(response) {
-	for(var i = 0; i < response.length; i++)
+	for(var i = 0; i < response.length; i++) {
 		plugins.push(response[i]);
+	}
 });
 
 var getUser = function(args) {
-	var userEmail = args.email;
+	var userId = args._id;
   	for(var i = 0; i < users.length; i++) {
-	  	if(userEmail == users[i].email) {
+	  	if(userId == users[i]._id) {
 	  		return users[i];
 	  	}
 	}
@@ -96,6 +142,10 @@ var getUser = function(args) {
 
 var getUsers = function() {
 	return users;
+}
+
+var getLogs = function() {
+	return logs;
 }
 
 var getRoles = function() {
@@ -124,6 +174,19 @@ var updateUserFunction = function({email, input}) {
 	  		let fullname = users[i].fullname;
 	  		let role = users[i].role;
 	  		let authority = users[i].authority;
+	  		let status = users[i].status;
+	  		let badan_usaha = users[i].badan_usaha;
+	  		let izin = users[i].izin;
+	  		let generasi = users[i].generasi;
+	  		let tahapan_kegiatan = users[i].tahapan_kegiatan;
+	  		let komoditas = users[i].komoditas;
+	  		let alamat_kantor = users[i].alamat_kantor;
+	  		let telepon = users[i].telepon;
+	  		let fax = users[i].fax;
+	  		let website = users[i].website;
+	  		let npwp = users[i].npwp;
+	  		let lokasi_tambang = users[i].lokasi_tambang;
+	  		let profile_picture = users[i].profile_picture;
 	  		users[i] = input;
 	  		if(users[i]._id == undefined)
 	  			users[i]._id = id;
@@ -135,6 +198,32 @@ var updateUserFunction = function({email, input}) {
 	  			users[i].role = role;
 	  		if(users[i].authority == undefined)
 	  			users[i].authority = authority;
+	  		if(users[i].status == undefined)
+	  			users[i].status = status;
+	  		if(users[i].badan_usaha == undefined)
+	  			users[i].badan_usaha = badan_usaha;
+	  		if(users[i].izin == undefined)
+	  			users[i].izin = izin;
+	  		if(users[i].generasi == undefined)
+	  			users[i].generasi = generasi;
+	  		if(users[i].tahapan_kegiatan == undefined)
+	  			users[i].tahapan_kegiatan = tahapan_kegiatan;
+	  		if(users[i].komoditas == undefined)
+	  			users[i].komoditas = komoditas;
+	  		if(users[i].alamat_kantor == undefined)
+	  			users[i].alamat_kantor = alamat_kantor;
+	  		if(users[i].telepon == undefined)
+	  			users[i].telepon = telepon;
+	  		if(users[i].fax == undefined)
+	  			users[i].fax = fax;
+	  		if(users[i].website == undefined)
+	  			users[i].website = website;
+	  		if(users[i].npwp == undefined)
+	  			users[i].npwp = npwp;
+	  		if(users[i].lokasi_tambang == undefined)
+	  			users[i].lokasi_tambang = lokasi_tambang;
+	  		if(users[i].profile_picture == undefined)
+	  			users[i].profile_picture = profile_picture;
 	  		return input;
 	  	}
 	}
@@ -153,6 +242,11 @@ var deleteUserFunction = function({email}) {
 	  		return users[i].email;
 	  	}
 	}
+}
+
+var createLogFunction = function({input}) {
+	logs.push(input);
+	return input;
 }
 
 var createPluginFunction = function({input}) {
@@ -174,39 +268,15 @@ var updatePluginFunction = function({name, input}) {
 exports.root = {
 	user: getUser,
 	users: getUsers,
+	logs: getLogs,
 	roles: getRoles,
 	plugin: getPlugin,
 	plugins: getPlugins,
-	blog: blogGraphql.root.blog,
-	blogs: blogGraphql.root.blogs,
-	commerce: commerceGraphql.root.commerce,
-	commerces: commerceGraphql.root.commerces,
-	transaction: commerceGraphql.root.transaction,
-	transactions: commerceGraphql.root.transactions,
-	consult: consultGraphql.root.consult,
-	consultPending: consultGraphql.root.consultPending,
-	consultMed: consultGraphql.root.consultMed,
-	consults: consultGraphql.root.consults,
-	supply: supplyGraphql.root.supply,
-	supplies: supplyGraphql.root.supplies,
+
 	updateUser: updateUserFunction,
 	createUser: createUserFunction,
 	deleteUser: deleteUserFunction,
+	createLog: createLogFunction,
 	createPlugin: createPluginFunction,
-	updatePlugin: updatePluginFunction,
-	updateBlog: blogGraphql.root.updateBlog,
-	createBlog: blogGraphql.root.createBlog,
-	deleteBlog: blogGraphql.root.deleteBlog,
-	updateCommerce: commerceGraphql.root.updateCommerce,
-	createCommerce: commerceGraphql.root.createCommerce,
-	deleteCommerce: commerceGraphql.root.deleteCommerce,
-	updateTransaction: commerceGraphql.root.updateTransaction,
-	createTransaction: commerceGraphql.root.createTransaction,
-	deleteTransaction: commerceGraphql.root.deleteTransaction,
-	updateConsult: consultGraphql.root.updateConsult,
-	createConsult: consultGraphql.root.createConsult,
-	deleteConsult: consultGraphql.root.deleteConsult,
-	updateSupply: supplyGraphql.root.updateSupply,
-	createSupply: supplyGraphql.root.createSupply,
-	deleteSupply: supplyGraphql.root.deleteSupply
+	updatePlugin: updatePluginFunction
 };

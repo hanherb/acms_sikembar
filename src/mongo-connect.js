@@ -1,23 +1,14 @@
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
-// var mongourl = 'mongodb://localhost:27017/';
-var TortoiseDB = require('tortoisedb');
-
-const torApp = new TortoiseDB({
-	name: 'acms',
-	port: 4000,
-	mongoURI: 'mongodb://localhost:27017',
-	batchLimit: 1000
-});
-torApp.start();
+var mongourl = 'mongodb://localhost:27017/';
 
 exports.mongoUser = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
+	MongoClient.connect(mongourl, function(err, db) {
 		if(err) {
 			console.log("Error: ", err);
 		}
 		else {
-			var dbo = db.db("acms");
+			var dbo = db.db("sikembar");
 
 			if(action == "find") {
 				console.log("Connection Established. Action="+action);
@@ -28,25 +19,25 @@ exports.mongoUser = function(action, query, callback) {
 			  	});
 			}
 
-			else if(action == "insert-one") {
+			else if(action == "insert") {
 				console.log("Connection Established. Action="+action);
-				dbo.collection("user").insertOne(query, function(err, result) {
+				dbo.collection("user").insert(query, function(err, result) {
 					if(callback)
 						return callback(result);
 			    	db.close();
 			  	});
 			}
 
-			else if(action == "update-one") {
+			else if(action == "update") {
 				console.log("Connection Established. Action="+action);
-				dbo.collection("user").updateOne(query[0], query[1], function(err, result) {
+				dbo.collection("user").update(query[0], query[1], function(err, result) {
 					if(callback)
 						return callback(result);
 					db.close();
 				});
 			}
 
-			else if(action == "delete-one") {
+			else if(action == "delete") {
 				console.log("Connection Established. Action="+action);
 				dbo.collection("user").deleteOne(query, function(err, result) {
 					if(callback)
@@ -76,12 +67,12 @@ exports.mongoUser = function(action, query, callback) {
 }
 
 exports.mongoRole = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
+	MongoClient.connect(mongourl, function(err, db) {
 		if(err) {
 			console.log("Error: ", err);
 		}
 		else {
-			var dbo = db.db("acms");
+			var dbo = db.db("sikembar");
 
 			if(action == "find") {
 				console.log("Connection Established. Action="+action);
@@ -96,12 +87,12 @@ exports.mongoRole = function(action, query, callback) {
 }
 
 exports.mongoPlugin = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
+	MongoClient.connect(mongourl, function(err, db) {
 		if(err) {
 			console.log("Error: ", err);
 		}
 		else {
-			var dbo = db.db("acms");
+			var dbo = db.db("sikembar");
 
 			if(action == "update") {
 				console.log("Connection Established. Action="+action);
@@ -123,17 +114,17 @@ exports.mongoPlugin = function(action, query, callback) {
 	});
 }
 
-exports.mongoBlog = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
+exports.mongoLogger = function(action, query, callback) {
+	MongoClient.connect(mongourl, function(err, db) {
 		if(err) {
 			console.log("Error: ", err);
 		}
 		else {
-			var dbo = db.db("acms");
+			var dbo = db.db("sikembar");
 
-			if(action == "insert-one") {
+			if(action == "insert") {
 				console.log("Connection Established. Action="+action);
-				dbo.collection("blog").insertOne(query, function(err, result) {
+				dbo.collection("logger").insertOne(query, function(err, result) {
 					if(callback)
 						return callback(result);
 			    	db.close();
@@ -141,199 +132,23 @@ exports.mongoBlog = function(action, query, callback) {
 			}
 
 			else if(action == "find") {
-				dbo.collection("blog").find({}).toArray(function(err, result) {
+				dbo.collection("logger").find({}).toArray(function(err, result) {
 					if(callback)
 						return callback(result);
 			    	db.close();
 			  	});
 			}
 
-			else if(action == "update-one") {
-				dbo.collection("blog").updateOne(query[0], query[1], function(err, result) {
+			else if(action == "update") {
+				dbo.collection("logger").update(query[0], query[1], function(err, result) {
 					if(callback)
 						return callback(result);
 					db.close();
 				});
 			}
 
-			else if(action == "delete-one") {
-				dbo.collection("blog").deleteOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-		}
-	});
-}
-
-exports.mongoCommerce = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
-		if(err) {
-			console.log("Error: ", err);
-		}
-		else {
-			var dbo = db.db("acms");
-
-			if(action == "insert-one") {
-				console.log("Connection Established. Action="+action);
-				dbo.collection("commerce").insertOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "find") {
-				dbo.collection("commerce").find({}).toArray(function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "update-one") {
-				dbo.collection("commerce").updateOne(query[0], query[1], function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-
-			else if(action == "delete-one") {
-				dbo.collection("commerce").deleteOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-		}
-	});
-}
-
-exports.mongoTransaction = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
-		if(err) {
-			console.log("Error: ", err);
-		}
-		else {
-			var dbo = db.db("acms");
-
-			if(action == "insert-one") {
-				console.log("Connection Established. Action="+action);
-				dbo.collection("transaction").insertOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "find") {
-				dbo.collection("transaction").find({}).toArray(function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "update-one") {
-				dbo.collection("transaction").updateOne(query[0], query[1], function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-
-			else if(action == "delete-one") {
-				dbo.collection("transaction").deleteOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-		}
-	});
-}
-
-exports.mongoConsult = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
-		if(err) {
-			console.log("Error: ", err);
-		}
-		else {
-			var dbo = db.db("acms");
-
-			if(action == "insert-one") {
-				console.log("Connection Established. Action="+action);
-				dbo.collection("consult").insertOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "find") {
-				dbo.collection("consult").find({}).toArray(function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "update-one") {
-				dbo.collection("consult").updateOne(query[0], query[1], function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-
-			else if(action == "delete-one") {
-				dbo.collection("consult").deleteOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-		}
-	});
-}
-
-exports.mongoSupply = function(action, query, callback) {
-	MongoClient.connect(torApp.mongoShell._url, function(err, db) {
-		if(err) {
-			console.log("Error: ", err);
-		}
-		else {
-			var dbo = db.db("acms");
-
-			if(action == "insert-one") {
-				console.log("Connection Established. Action="+action);
-				dbo.collection("supply").insertOne(query, function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "find") {
-				dbo.collection("supply").find({}).toArray(function(err, result) {
-					if(callback)
-						return callback(result);
-			    	db.close();
-			  	});
-			}
-
-			else if(action == "update-one") {
-				dbo.collection("supply").updateOne(query[0], query[1], function(err, result) {
-					if(callback)
-						return callback(result);
-					db.close();
-				});
-			}
-
-			else if(action == "delete-one") {
-				dbo.collection("supply").deleteOne(query, function(err, result) {
+			else if(action == "delete") {
+				dbo.collection("logger").deleteOne(query, function(err, result) {
 					if(callback)
 						return callback(result);
 					db.close();
