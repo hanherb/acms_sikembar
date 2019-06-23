@@ -129,6 +129,105 @@ exports.addPlugin = function(req, res) {
 	}
 }
 
+exports.addAsumsiKeuangan = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoAsumsiKeuangan("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addNeraca = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoNeraca("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addHargaPokok = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoHargaPokok("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addArusKas = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoArusKas("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addInvestasi = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoInvestasi("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addPenerimaanNegara = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoPenerimaanNegara("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addKeuanganLainnya = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoKeuanganLainnya("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addSumberPembiayaan = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoSumberPembiayaan("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addAnggaranBelanja = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan
+	};
+	mongo.mongoAnggaranBelanja("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
 exports.logout = function(req, res) {
 	res.json(1);
 }

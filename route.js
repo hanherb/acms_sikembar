@@ -45,6 +45,24 @@ router.route('/get-plugin').get(function(req, res) {rf.getPlugin(req, res)});
 
 router.route('/add-plugin').post(function(req, res) {rf.addPlugin(req, res)});
 
+router.route('/add-asumsi-keuangan').post(function(req, res) {rf.addAsumsiKeuangan(req, res)});
+
+router.route('/add-neraca').post(function(req, res) {rf.addNeraca(req, res)});
+
+router.route('/add-harga-pokok').post(function(req, res) {rf.addHargaPokok(req, res)});
+
+router.route('/add-arus-kas').post(function(req, res) {rf.addArusKas(req, res)});
+
+router.route('/add-investasi').post(function(req, res) {rf.addInvestasi(req, res)});
+
+router.route('/add-penerimaan-negara').post(function(req, res) {rf.addPenerimaanNegara(req, res)});
+
+router.route('/add-keuangan-lainnya').post(function(req, res) {rf.addKeuanganLainnya(req, res)});
+
+router.route('/add-sumber-pembiayaan').post(function(req, res) {rf.addSumberPembiayaan(req, res)});
+
+router.route('/add-anggaran-belanja').post(function(req, res) {rf.addAnggaranBelanja(req, res)});
+
 router.route('/logout').get(function(req, res) {rf.logout(req, res)});
 
 module.exports = router;
