@@ -129,6 +129,12 @@ exports.addPlugin = function(req, res) {
 	}
 }
 
+exports.getAsumsiKeuangan = function(req, res) {
+	mongo.mongoAsumsiKeuangan("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
 exports.addAsumsiKeuangan = function(req, res) {
 	let obj = {
 		data: req.body.data,
@@ -151,6 +157,12 @@ exports.addNeraca = function(req, res) {
 	});
 }
 
+exports.getNeraca = function(req, res) {
+	mongo.mongoNeraca("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
 exports.addHargaPokok = function(req, res) {
 	let obj = {
 		data: req.body.data,
@@ -158,6 +170,12 @@ exports.addHargaPokok = function(req, res) {
 		tahapan_kegiatan: req.body.tahapan_kegiatan
 	};
 	mongo.mongoHargaPokok("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getHargaPokok = function(req, res) {
+	mongo.mongoHargaPokok("find", {}, function(response) {
 		res.json(response);
 	});
 }
@@ -173,6 +191,12 @@ exports.addArusKas = function(req, res) {
 	});
 }
 
+exports.getArusKas = function(req, res) {
+	mongo.mongoArusKas("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
 exports.addInvestasi = function(req, res) {
 	let obj = {
 		data: req.body.data,
@@ -180,6 +204,12 @@ exports.addInvestasi = function(req, res) {
 		tahapan_kegiatan: req.body.tahapan_kegiatan
 	};
 	mongo.mongoInvestasi("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getInvestasi = function(req, res) {
+	mongo.mongoInvestasi("find", {}, function(response) {
 		res.json(response);
 	});
 }
@@ -195,6 +225,12 @@ exports.addPenerimaanNegara = function(req, res) {
 	});
 }
 
+exports.getPenerimaanNegara = function(req, res) {
+	mongo.mongoPenerimaanNegara("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
 exports.addKeuanganLainnya = function(req, res) {
 	let obj = {
 		data: req.body.data,
@@ -202,6 +238,12 @@ exports.addKeuanganLainnya = function(req, res) {
 		tahapan_kegiatan: req.body.tahapan_kegiatan
 	};
 	mongo.mongoKeuanganLainnya("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getKeuanganLainnya = function(req, res) {
+	mongo.mongoKeuanganLainnya("find", {}, function(response) {
 		res.json(response);
 	});
 }
@@ -217,6 +259,12 @@ exports.addSumberPembiayaan = function(req, res) {
 	});
 }
 
+exports.getSumberPembiayaan = function(req, res) {
+	mongo.mongoSumberPembiayaan("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
 exports.addAnggaranBelanja = function(req, res) {
 	let obj = {
 		data: req.body.data,
@@ -224,6 +272,12 @@ exports.addAnggaranBelanja = function(req, res) {
 		tahapan_kegiatan: req.body.tahapan_kegiatan
 	};
 	mongo.mongoAnggaranBelanja("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getAnggaranBelanja = function(req, res) {
+	mongo.mongoAnggaranBelanja("find", {}, function(response) {
 		res.json(response);
 	});
 }

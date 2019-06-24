@@ -75,6 +75,18 @@ function authorityFilter(req, res, next) {
 			return true;
 		}
 
+		if(authorityType == 'anggaran' ||
+			authorityType == 'arus' ||
+			authorityType == 'asumsi' ||
+			authorityType == 'harga' ||
+			authorityType == 'investasi' ||
+			authorityType == 'keuangan' ||
+			authorityType == 'neraca' ||
+			authorityType == 'penerimaan' ||
+			authorityType == 'sumber') {
+			return true;
+		}
+
 		for(let i = 0; i <= userAuthority.length; i++) {
 			if(i == userAuthority.length) {
 				return false;
