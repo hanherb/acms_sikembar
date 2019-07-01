@@ -158,6 +158,50 @@ exports.mongoLogger = function(action, query, callback) {
 	});
 }
 
+exports.mongoKomoditas = function(action, query, callback) {
+	MongoClient.connect(mongourl, function(err, db) {
+		if(err) {
+			console.log("Error: ", err);
+		}
+		else {
+			var dbo = db.db("sikembar");
+
+			if(action == "insert") {
+				console.log("Connection Established. Action="+action);
+				dbo.collection("komoditas").insertOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "find") {
+				dbo.collection("komoditas").find({}).toArray(function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "update") {
+				dbo.collection("komoditas").update(query[0], query[1], function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+
+			else if(action == "delete") {
+				dbo.collection("komoditas").deleteOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+		}
+	});
+}
+
 exports.mongoAsumsiKeuangan = function(action, query, callback) {
 	MongoClient.connect(mongourl, function(err, db) {
 		if(err) {

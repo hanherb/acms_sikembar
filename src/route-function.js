@@ -129,6 +129,21 @@ exports.addPlugin = function(req, res) {
 	}
 }
 
+exports.getKomoditas = function(req, res) {
+	mongo.mongoKomoditas("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addKomoditas = function(req, res) {
+	let obj = {
+		data: req.body.data,
+	};
+	mongo.mongoKomoditas("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
 exports.getAsumsiKeuangan = function(req, res) {
 	mongo.mongoAsumsiKeuangan("find", {}, function(response) {
 		res.json(response);

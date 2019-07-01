@@ -75,7 +75,8 @@ function authorityFilter(req, res, next) {
 			return true;
 		}
 
-		if(authorityType == 'anggaran' ||
+		if(authorityType == 'komoditas' ||
+			authorityType == 'anggaran' ||
 			authorityType == 'arus' ||
 			authorityType == 'asumsi' ||
 			authorityType == 'harga' ||

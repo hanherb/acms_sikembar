@@ -9,7 +9,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, '/root/dashboard-esdm/src/assets/images/uploads');
+        cb(null, 'D:/nodejs/dashboard-esdm/src/assets/images/uploads');
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname + '.png');
@@ -44,6 +44,10 @@ router.route('/list-plugin').get(function(req, res) {rf.listPlugin(req, res)});
 router.route('/get-plugin').get(function(req, res) {rf.getPlugin(req, res)});
 
 router.route('/add-plugin').post(function(req, res) {rf.addPlugin(req, res)});
+
+router.route('/get-komoditas').get(function(req, res) {rf.getKomoditas(req, res)});
+
+router.route('/add-komoditas').post(function(req, res) {rf.addKomoditas(req, res)});
 
 router.route('/get-asumsi-keuangan').get(function(req, res) {rf.getAsumsiKeuangan(req, res)});
 
