@@ -57,6 +57,10 @@ router.route('/get-neraca').get(function(req, res) {rf.getNeraca(req, res)});
 
 router.route('/add-neraca').post(function(req, res) {rf.addNeraca(req, res)});
 
+router.route('/get-laba-rugi').get(function(req, res) {rf.getLabaRugi(req, res)});
+
+router.route('/add-laba-rugi').post(function(req, res) {rf.addLabaRugi(req, res)});
+
 router.route('/get-harga-pokok').get(function(req, res) {rf.getHargaPokok(req, res)});
 
 router.route('/add-harga-pokok').post(function(req, res) {rf.addHargaPokok(req, res)});
@@ -84,6 +88,10 @@ router.route('/add-sumber-pembiayaan').post(function(req, res) {rf.addSumberPemb
 router.route('/get-anggaran-belanja').get(function(req, res) {rf.getAnggaranBelanja(req, res)});
 
 router.route('/add-anggaran-belanja').post(function(req, res) {rf.addAnggaranBelanja(req, res)});
+
+router.route('/get-belanja-barang').get(function(req, res) {rf.getBelanjaBarang(req, res)});
+
+router.route('/add-belanja-barang').post(function(req, res) {rf.addBelanjaBarang(req, res)});
 
 router.route('/logout').get(function(req, res) {rf.logout(req, res)});
 

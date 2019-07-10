@@ -290,6 +290,50 @@ exports.mongoNeraca = function(action, query, callback) {
 	});
 }
 
+exports.mongoLabaRugi = function(action, query, callback) {
+	MongoClient.connect(mongourl, function(err, db) {
+		if(err) {
+			console.log("Error: ", err);
+		}
+		else {
+			var dbo = db.db("sikembar");
+
+			if(action == "insert") {
+				console.log("Connection Established. Action="+action);
+				dbo.collection("labaRugi").insertOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "find") {
+				dbo.collection("labaRugi").find({}).toArray(function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "update") {
+				dbo.collection("labaRugi").update(query[0], query[1], function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+
+			else if(action == "delete") {
+				dbo.collection("labaRugi").deleteOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+		}
+	});
+}
+
 exports.mongoHargaPokok = function(action, query, callback) {
 	MongoClient.connect(mongourl, function(err, db) {
 		if(err) {
@@ -589,6 +633,50 @@ exports.mongoAnggaranBelanja = function(action, query, callback) {
 
 			else if(action == "delete") {
 				dbo.collection("anggaranBelanja").deleteOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+		}
+	});
+}
+
+exports.mongoBelanjaBarang = function(action, query, callback) {
+	MongoClient.connect(mongourl, function(err, db) {
+		if(err) {
+			console.log("Error: ", err);
+		}
+		else {
+			var dbo = db.db("sikembar");
+
+			if(action == "insert") {
+				console.log("Connection Established. Action="+action);
+				dbo.collection("belanjaBarang").insertOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "find") {
+				dbo.collection("belanjaBarang").find({}).toArray(function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "update") {
+				dbo.collection("belanjaBarang").update(query[0], query[1], function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+
+			else if(action == "delete") {
+				dbo.collection("belanjaBarang").deleteOne(query, function(err, result) {
 					if(callback)
 						return callback(result);
 					db.close();
