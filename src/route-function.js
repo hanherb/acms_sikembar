@@ -165,7 +165,8 @@ exports.addNeraca = function(req, res) {
 	let obj = {
 		data: req.body.data,
 		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		tahapan_kegiatan: req.body.tahapan_kegiatan,
+		komoditas: req.body.komoditas
 	};
 	mongo.mongoNeraca("insert", obj, function(response) {
 		res.json(response);
@@ -174,6 +175,24 @@ exports.addNeraca = function(req, res) {
 
 exports.getNeraca = function(req, res) {
 	mongo.mongoNeraca("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addLabaRugi = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by,
+		tahapan_kegiatan: req.body.tahapan_kegiatan,
+		komoditas: req.body.komoditas
+	};
+	mongo.mongoLabaRugi("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getLabaRugi = function(req, res) {
+	mongo.mongoLabaRugi("find", {}, function(response) {
 		res.json(response);
 	});
 }
@@ -293,6 +312,22 @@ exports.addAnggaranBelanja = function(req, res) {
 
 exports.getAnggaranBelanja = function(req, res) {
 	mongo.mongoAnggaranBelanja("find", {}, function(response) {
+		res.json(response);
+	});
+}
+
+exports.addBelanjaBarang = function(req, res) {
+	let obj = {
+		data: req.body.data,
+		upload_by: req.body.upload_by
+	};
+	mongo.mongoBelanjaBarang("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getBelanjaBarang = function(req, res) {
+	mongo.mongoBelanjaBarang("find", {}, function(response) {
 		res.json(response);
 	});
 }
