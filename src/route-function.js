@@ -8,6 +8,7 @@ const mongo = require('./mongo-connect');
 
 const registerPlugin = require('../plugin/register/register');
 const loginPlugin = require('../plugin/login/login');
+const commercePlugin = require('../plugin/commerce/commerce');
 
 app.use(cookieParser());
 
@@ -55,6 +56,9 @@ exports.updateUser = function(req, res) {
 	    fax: req.body.fax,
 	    website: req.body.website,
 	    npwp: req.body.npwp,
+	    siup: req.body.siup,
+	    tdp: req.body.tdp,
+	    skt_minerba: req.body.skt_minerba,
 	    lokasi_tambang: req.body.lokasi_tambang,
 		profile_picture: req.body.profile_picture,
 	}}];
@@ -76,6 +80,15 @@ exports.postPicture = function(req, res) {
 	}
 	else {
 		res.json('No Profile Picture Uploaded');
+	}
+}
+
+exports.postGoodsPicture = function(req, res) {
+	if(req.file) {
+		res.json(req.file);
+	}
+	else {
+		res.json('No Goods Picture Uploaded');
 	}
 }
 
@@ -330,6 +343,22 @@ exports.getBelanjaBarang = function(req, res) {
 	mongo.mongoBelanjaBarang("find", {}, function(response) {
 		res.json(response);
 	});
+}
+
+exports.getCommerce = function(req, res) {
+	res.json(1);
+}
+
+exports.addItem = function(req, res) {
+	commercePlugin.add(req, res);
+}
+
+exports.updateItem = function(req, res) {
+	commercePlugin.update(req, res);
+}
+
+exports.deleteItem = function(req, res) {
+	commercePlugin.delete(req, res);
 }
 
 exports.logout = function(req, res) {

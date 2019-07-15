@@ -685,3 +685,47 @@ exports.mongoBelanjaBarang = function(action, query, callback) {
 		}
 	});
 }
+
+exports.mongoCommerce = function(action, query, callback) {
+	MongoClient.connect(mongourl, function(err, db) {
+		if(err) {
+			console.log("Error: ", err);
+		}
+		else {
+			var dbo = db.db("sikembar");
+
+			if(action == "insert") {
+				console.log("Connection Established. Action="+action);
+				dbo.collection("commerce").insert(query, function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "find") {
+				dbo.collection("commerce").find({}).toArray(function(err, result) {
+					if(callback)
+						return callback(result);
+			    	db.close();
+			  	});
+			}
+
+			else if(action == "update") {
+				dbo.collection("commerce").update(query[0], query[1], function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+
+			else if(action == "delete") {
+				dbo.collection("commerce").deleteOne(query, function(err, result) {
+					if(callback)
+						return callback(result);
+					db.close();
+				});
+			}
+		}
+	});
+}

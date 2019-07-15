@@ -37,6 +37,8 @@ router.route('/delete-user').post(function(req, res) {rf.deleteUser(req, res)});
 
 router.route('/post-picture').post(upload.single('profile_picture'), function(req, res) {rf.postPicture(req, res)});
 
+router.route('/post-goods-picture').post(upload.single('goods_picture'), function(req, res) {rf.postGoodsPicture(req, res)});
+
 router.route('/get-role').get(function(req, res) {rf.getRole(req, res)});
 
 router.route('/list-plugin').get(function(req, res) {rf.listPlugin(req, res)});
@@ -92,6 +94,14 @@ router.route('/add-anggaran-belanja').post(function(req, res) {rf.addAnggaranBel
 router.route('/get-belanja-barang').get(function(req, res) {rf.getBelanjaBarang(req, res)});
 
 router.route('/add-belanja-barang').post(function(req, res) {rf.addBelanjaBarang(req, res)});
+
+router.route('/get-commerce').get(function(req, res) {rf.getCommerce(req, res)});
+
+router.route('/add-commerce').post(function(req, res) {rf.addItem(req, res)});
+
+router.route('/update-commerce').post(function(req, res) {rf.updateItem(req, res)});
+
+router.route('/delete-commerce').post(function(req, res) {rf.deleteItem(req, res)});
 
 router.route('/logout').get(function(req, res) {rf.logout(req, res)});
 

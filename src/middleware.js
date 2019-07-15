@@ -85,7 +85,8 @@ function authorityFilter(req, res, next) {
 			authorityType == 'laba' ||
 			authorityType == 'neraca' ||
 			authorityType == 'penerimaan' ||
-			authorityType == 'sumber') {
+			authorityType == 'sumber' ||
+			authorityType == 'commerce') {
 			return true;
 		}
 

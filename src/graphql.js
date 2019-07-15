@@ -2,6 +2,7 @@ var mongodb = require('mongodb');
 var mongo = require('./mongo-connect');
 var {buildSchema} = require('graphql');
 var mergeSchema = require('graphql-tools');
+var commerceGraphql = require('../plugin/commerce/commerce-graphql');
 
 var defaultSchema = buildSchema(`
 	type Query {
@@ -30,6 +31,9 @@ var defaultSchema = buildSchema(`
 	    fax: String,
 	    website: String,
 	    npwp: String,
+	    siup: String,
+	    tdp: String,
+	    skt_minerba: String,
 	    lokasi_tambang: String,
 	    profile_picture: String
   	},
@@ -77,6 +81,9 @@ var defaultSchema = buildSchema(`
 	    fax: String,
 	    website: String,
 	    npwp: String,
+	    siup: String,
+	    tdp: String,
+	    skt_minerba: String,
 	    lokasi_tambang: String,
 	    profile_picture: String
   	},
@@ -96,6 +103,7 @@ var defaultSchema = buildSchema(`
 
 var schemas = [];
 schemas.push(defaultSchema);
+schemas.push(commerceGraphql.schema);
 
 exports.schema = mergeSchema.mergeSchemas({
   schemas: schemas
@@ -185,6 +193,9 @@ var updateUserFunction = function({email, input}) {
 	  		let fax = users[i].fax;
 	  		let website = users[i].website;
 	  		let npwp = users[i].npwp;
+	  		let siup = users[i].siup;
+	  		let tdp = users[i].tdp;
+	  		let skt_minerba = users[i].skt_minerba;
 	  		let lokasi_tambang = users[i].lokasi_tambang;
 	  		let profile_picture = users[i].profile_picture;
 	  		users[i] = input;
@@ -220,6 +231,12 @@ var updateUserFunction = function({email, input}) {
 	  			users[i].website = website;
 	  		if(users[i].npwp == undefined)
 	  			users[i].npwp = npwp;
+	  		if(users[i].siup == undefined)
+	  			users[i].siup = siup;
+	  		if(users[i].tdp == undefined)
+	  			users[i].tdp = tdp;
+	  		if(users[i].skt_minerba == undefined)
+	  			users[i].skt_minerba = skt_minerba;
 	  		if(users[i].lokasi_tambang == undefined)
 	  			users[i].lokasi_tambang = lokasi_tambang;
 	  		if(users[i].profile_picture == undefined)
@@ -273,10 +290,17 @@ exports.root = {
 	plugin: getPlugin,
 	plugins: getPlugins,
 
+	commerce: commerceGraphql.root.commerce,
+	commerces: commerceGraphql.root.commerces,
+
 	updateUser: updateUserFunction,
 	createUser: createUserFunction,
 	deleteUser: deleteUserFunction,
 	createLog: createLogFunction,
 	createPlugin: createPluginFunction,
-	updatePlugin: updatePluginFunction
+	updatePlugin: updatePluginFunction,
+
+	updateCommerce: commerceGraphql.root.updateCommerce,
+	createCommerce: commerceGraphql.root.createCommerce,
+	deleteCommerce: commerceGraphql.root.deleteCommerce,
 };
