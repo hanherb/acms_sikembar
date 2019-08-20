@@ -9,7 +9,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'D:/nodejs/dashboard-esdm/src/assets/images/uploads');
+        cb(null, '/root/nodejs/dashboard-esdm/src/assets/images/uploads');
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname + '.png');
@@ -57,9 +57,13 @@ router.route('/add-asumsi-keuangan').post(function(req, res) {rf.addAsumsiKeuang
 
 router.route('/get-neraca').get(function(req, res) {rf.getNeraca(req, res)});
 
+router.route('/get-neraca-public').get(function(req, res) {rf.getNeraca(req, res)});
+
 router.route('/add-neraca').post(function(req, res) {rf.addNeraca(req, res)});
 
 router.route('/get-laba-rugi').get(function(req, res) {rf.getLabaRugi(req, res)});
+
+router.route('/get-laba-rugi-public').get(function(req, res) {rf.getLabaRugi(req, res)});
 
 router.route('/add-laba-rugi').post(function(req, res) {rf.addLabaRugi(req, res)});
 
