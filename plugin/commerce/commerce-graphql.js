@@ -12,6 +12,7 @@ exports.schema = buildSchema(`
 		_id: String,
   		name: String,
   		price: Int,
+  		tkdn: Int,
   		qty: Int,
   		description: String,
   		category: String,
@@ -30,6 +31,7 @@ exports.schema = buildSchema(`
 		_id: String,
   		name: String,
   		price: Int,
+  		tkdn: Int,
   		qty: Int,
   		description: String,
   		category: String,
@@ -67,6 +69,7 @@ var updateCommerceFunction = function({_id, input}) {
 	  		let id = commerces[i]._id;
 	  		let name = commerces[i].name;
 	  		let price = commerces[i].price;
+	  		let tkdn = commerces[i].tkdn;
 	  		let qty = commerces[i].qty;
 	  		let description = commerces[i].description;
 	  		let category = commerces[i].category;
@@ -80,6 +83,8 @@ var updateCommerceFunction = function({_id, input}) {
 	  			commerces[i].name = name;
 	  		if(commerces[i].price == undefined)
 	  			commerces[i].price = price;
+	  		if(commerces[i].tkdn == undefined)
+	  			commerces[i].tkdn = tkdn;
 	  		if(commerces[i].qty == undefined)
 	  			commerces[i].qty = qty;
 	  		if(commerces[i].description == undefined)

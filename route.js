@@ -21,6 +21,8 @@ router.route('/').get(function(req, res) {rf.redirectIndex(req, res)});
 
 router.route('/get-user').get(function(req, res) {rf.getUser(req, res)});
 
+router.route('/get-user-public').get(function(req, res) {rf.getUser(req, res)});
+
 router.route('/get-log').get(function(req, res) {rf.getLog(req, res)});
 
 router.route('/import-csv').post(function(req, res) {rf.importCsv(req, res)});

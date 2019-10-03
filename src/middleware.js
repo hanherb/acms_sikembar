@@ -118,6 +118,7 @@ exports.beforeEndPoint = function(req, res, next) {
 		req.path != '/get-neraca-public' && 
 		req.path != '/get-laba-rugi-public' &&
 		req.path != '/get-commerce' &&
+		req.path != '/get-user-public' &&
 		req.path != '/logout') {
 		// console.log("authorization headers: " + req.headers.authorization);
 		// console.log("user session headers: " + req.headers.user_session);
