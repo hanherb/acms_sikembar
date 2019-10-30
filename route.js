@@ -9,7 +9,11 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
+<<<<<<< HEAD
         cb(null, 'C:/nodejs/dashboard-esdm/src/assets/images/uploads');
+=======
+        cb(null, '/home/admin-sikembar/dashboard-esdm/src/assets/images/uploads');
+>>>>>>> fbaafceba27ecd2235d9a20ce09e925c929c8f69
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname + '.png');
@@ -20,6 +24,8 @@ const upload = multer({storage});
 router.route('/').get(function(req, res) {rf.redirectIndex(req, res)});
 
 router.route('/get-user').get(function(req, res) {rf.getUser(req, res)});
+
+router.route('/get-user-public').get(function(req, res) {rf.getUser(req, res)});
 
 router.route('/get-log').get(function(req, res) {rf.getLog(req, res)});
 
@@ -59,9 +65,13 @@ router.route('/add-asumsi-keuangan').post(function(req, res) {rf.addAsumsiKeuang
 
 router.route('/get-neraca').get(function(req, res) {rf.getNeraca(req, res)});
 
+router.route('/get-neraca-public').get(function(req, res) {rf.getNeraca(req, res)});
+
 router.route('/add-neraca').post(function(req, res) {rf.addNeraca(req, res)});
 
 router.route('/get-laba-rugi').get(function(req, res) {rf.getLabaRugi(req, res)});
+
+router.route('/get-laba-rugi-public').get(function(req, res) {rf.getLabaRugi(req, res)});
 
 router.route('/add-laba-rugi').post(function(req, res) {rf.addLabaRugi(req, res)});
 

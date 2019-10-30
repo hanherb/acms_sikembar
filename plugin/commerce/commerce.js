@@ -5,6 +5,7 @@ exports.add = function(req, res) {
 	let obj = {
 		name: req.body.name,
 		price: req.body.price,
+		tkdn: req.body.tkdn,
 		qty: req.body.qty,
 		description: req.body.description,
 		category: req.body.category,
@@ -19,7 +20,16 @@ exports.add = function(req, res) {
 
 exports.update = function(req, res) {
 	let o_id = new mongodb.ObjectID(req.body._id);
-	let query = [{_id: o_id}, {$set: {name: req.body.name, price: req.body.price, qty: req.body.qty, description: req.body.description, category: req.body.category, image: req.body.image}}];
+	let query = [{_id: o_id}, {$set: {
+		name: req.body.name, 
+		price: req.body.price, 
+		tkdn: req.body.tkdn, 
+		qty: req.body.qty, 
+		description: 
+		req.body.description, 
+		category: req.body.category, 
+		image: req.body.image
+	}}];
 	mongo.mongoCommerce("update", query, function(response) {
 		console.log(response.result.nModified);
 		res.json(response);
