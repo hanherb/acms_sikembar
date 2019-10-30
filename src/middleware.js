@@ -115,6 +115,7 @@ exports.beforeEndPoint = function(req, res, next) {
 		req.path != '/get-role' && 
 		req.path != '/get-plugin' && 
 		req.path != '/get-belanja-barang' && 
+		req.path != '/create-user-many' && 
 		req.path != '/logout') {
 		// console.log("authorization headers: " + req.headers.authorization);
 		// console.log("user session headers: " + req.headers.user_session);

@@ -9,6 +9,7 @@ const mongo = require('./mongo-connect');
 const registerPlugin = require('../plugin/register/register');
 const loginPlugin = require('../plugin/login/login');
 const commercePlugin = require('../plugin/commerce/commerce');
+const perusahaan = require('../perusahaan.json');
 
 app.use(cookieParser());
 
@@ -34,6 +35,23 @@ exports.importCsv = function(req, res) {
 
 exports.registerUser = function(req, res) {
 	registerPlugin.register(req, res);
+}
+
+exports.registerUserMany = function(req, res) {
+	// for(var i = 0; i < perusahaan.length; i++) {
+	// 	let obj = {
+	// 		email: perusahaan[i].email,
+	// 		fullname: perusahaan[i].fullname,
+	// 		password: perusahaan[i].password,
+	// 		role: perusahaan[i].role,
+	// 		authority: perusahaan[i].authority,
+	// 		status: perusahaan[i].status
+	// 	};
+	let obj = perusahaan;
+	mongo.mongoUser("insert", obj, function(response) {
+		res.json(response);
+	});
+	// }
 }
 
 exports.loginUser = function(req, res) {

@@ -9,7 +9,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'D:/nodejs/dashboard-esdm/src/assets/images/uploads');
+        cb(null, 'C:/nodejs/dashboard-esdm/src/assets/images/uploads');
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname + '.png');
@@ -30,6 +30,8 @@ router.route('/register-user').post(function(req, res) {rf.registerUser(req, res
 router.route('/login-user').post(function(req, res) {rf.loginUser(req, res)});
 
 router.route('/create-user').post(function(req, res) {rf.registerUser(req, res)});
+
+router.route('/create-user-many').get(function(req, res) {rf.registerUserMany(req, res)});
 
 router.route('/update-user').post(function(req, res) {rf.updateUser(req, res)});
 
