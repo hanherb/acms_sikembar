@@ -787,7 +787,7 @@ DROP TABLE IF EXISTS `terms`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `terms` (
   `term_id` int(11) NOT NULL AUTO_INCREMENT,
-  `term_name` text NOT NULL,
+  `term_name` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`term_id`),
   UNIQUE KEY `term_name` (`term_name`) USING HASH
