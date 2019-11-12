@@ -3,45 +3,26 @@ var mongo = require('./mongo-connect');
 var {buildSchema} = require('graphql');
 var mergeSchema = require('graphql-tools');
 var commerceGraphql = require('../plugin/commerce/commerce-graphql');
+var financeGraphql = require('../plugin/finance/finance-graphql');
 
 var defaultSchema = buildSchema(`
 	type Query {
-		user(_id: String!): Person,
-		users: [Person],
+		user(user_id: Int!): Users,
+		users: [Users],
 		logs: [Log],
-		roles: [Role],
+		roles: [Roles],
+		permission(permission_id: ID!): Permissions,
+		permissions: [Permissions],
+		company_type(company_type_id: ID!): Company_types,
+		company_types: [Company_types],
 		plugin(name: String!): Plugin,
 		plugins: [Plugin],
 	},
 
-	type Person {
-		_id: String,
-	    fullname: String,
-	    email: String,
-	    role: String,
-	    authority: [String],
-	    status: String,
-	    badan_usaha: String,
-	    izin: String,
-	    generasi: String,
-	    tahapan_kegiatan: String,
-	    komoditas: String
-	    alamat_kantor: String,
-	    telepon: String,
-	    fax: String,
-	    website: String,
-	    npwp: String,
-	    siup: String,
-	    tdp: String,
-	    skt_minerba: String,
-	    lokasi_tambang: String,
-	    profile_picture: String
-  	},
-
   	type Log {
-  		_id: String,
+  		log_id: Int,
   		path: String,
-  		userId: String,
+  		userId: Int,
   		date: String
   	},
 
@@ -50,60 +31,88 @@ var defaultSchema = buildSchema(`
   		status: Int
   	},
 
-  	type Role {
-		role_name: String
-  	},
+  	type Users{
+        user_id: Int!
+        username: String
+        fullname: String
+        password: String
+        company_type: String
+        role: String
+    },
+
+	type Roles{
+        role_id: ID!
+        role_name: String!
+        display_name: String!
+    },
+
+	type Permissions{
+        permission_id: ID!
+        role_id: ID!
+        display_name: String!
+        can_created_modules: String!
+        can_read_modules: String!
+        can_update_modules: String!
+        can_delete_modules: String!
+    },
+
+	type Company_types{
+        company_type_id: ID!
+        company_type_name: String!
+    },
 
   	type Mutation {
-		updateUser(email: String!, input: PersonInput): Person,
-		createUser(input: PersonInput): Person,
-		deleteUser(email: String!): Person,
+		updateUser(user_id: Int!, input: UsersInput): Users,
+		createUser(input: UsersInput): Users,
+		deleteUser(user_id: Int!): Users,
 		createLog(input: LogInput): Log,
-		updatePlugin(name: String!, input: PluginInput): Plugin
-		createPlugin(input: PluginInput): Plugin
+		updatePlugin(name: String!, input: PluginInput): Plugin,
+		createPlugin(input: PluginInput): Plugin,
+		createPermission(input: PermissionsInput): Permissions,
+		createCompany_types(input: Company_typesInput): Company_types,
 	},
 
-	input PersonInput {
-		_id: String,
-	    fullname: String,
-	    email: String,
-	    role: String,
-	    authority: [String],
-	    password: String,
-	    status: String,
-	    badan_usaha: String,
-	    izin: String,
-	    generasi: String,
-	    tahapan_kegiatan: String,
-	    komoditas: String
-	    alamat_kantor: String,
-	    telepon: String,
-	    fax: String,
-	    website: String,
-	    npwp: String,
-	    siup: String,
-	    tdp: String,
-	    skt_minerba: String,
-	    lokasi_tambang: String,
-	    profile_picture: String
+	input UsersInput {
+		user_id: Int!
+        username: String
+        fullname: String
+        password: String
+        company_type: String
+        role: String
   	},
 
   	input LogInput {
-  		_id: String,
+  		log_id: Int,
   		path: String,
-  		userId: String,
+  		userId: Int,
   		date: String
-  	}
+  	},
 
   	input PluginInput {
   		name: String,
   		status: Int
-  	}
+  	},
+
+  	input PermissionsInput{
+        permission_id: ID!
+        role_id: ID!
+        display_name: String!
+        can_created_modules: String!
+        can_read_modules: String!
+        can_update_modules: String!
+        can_delete_modules: String!
+    },
+
+	input Company_typesInput{
+        company_type_id: ID!
+        company_type_name: String!
+    },
 `);
 
 var schemas = [];
 schemas.push(defaultSchema);
 schemas.push(commerceGraphql.schema);
+schemas.push(financeGraphql.schema);
 
 exports.schema = mergeSchema.mergeSchemas({
   schemas: schemas
@@ -112,7 +121,6 @@ exports.schema = mergeSchema.mergeSchemas({
 var users = [];
 mongo.mongoUser("find", {}, function(response) {
 	for(var i = 0; i < response.length; i++) {
-		response[i]._id = response[i]._id.toString();
 		users.push(response[i]);
 	}
 });
@@ -120,29 +128,28 @@ mongo.mongoUser("find", {}, function(response) {
 var logs = [];
 mongo.mongoLogger("find", {}, function(response) {
 	for(var i = 0; i < response.length; i++) {
-		response[i]._id = response[i]._id.toString();
 		logs.push(response[i]);
 	}
 });
 
 var roles = [];
-mongo.mongoRole("find", {}, function(response) { 
-	for(var i = 0; i < response.length; i++) {
-		roles.push(response[i]);
-	}
-});
+// mongo.mongoRole("find", {}, function(response) { 
+// 	for(var i = 0; i < response.length; i++) {
+// 		roles.push(response[i]);
+// 	}
+// });
 
 var plugins = [];
-mongo.mongoPlugin("find", {}, function(response) {
-	for(var i = 0; i < response.length; i++) {
-		plugins.push(response[i]);
-	}
-});
+// mongo.mongoPlugin("find", {}, function(response) {
+// 	for(var i = 0; i < response.length; i++) {
+// 		plugins.push(response[i]);
+// 	}
+// });
 
 var getUser = function(args) {
-	var userId = args._id;
+	var userId = args.user_id;
   	for(var i = 0; i < users.length; i++) {
-	  	if(userId == users[i]._id) {
+	  	if(userId == users[i].user_id) {
 	  		return users[i];
 	  	}
 	}
@@ -173,74 +180,11 @@ var getPlugins = function() {
 	return plugins;
 }
 
-var updateUserFunction = function({email, input}) {
-	var userEmail = email;
+var updateUserFunction = function({user_id, input}) {
+	var userId = user_id;
   	for(var i = 0; i < users.length; i++) {
-	  	if(userEmail == users[i].email) {
-	  		let id = users[i]._id;
-	  		let email = users[i].email;
-	  		let fullname = users[i].fullname;
-	  		let role = users[i].role;
-	  		let authority = users[i].authority;
-	  		let status = users[i].status;
-	  		let badan_usaha = users[i].badan_usaha;
-	  		let izin = users[i].izin;
-	  		let generasi = users[i].generasi;
-	  		let tahapan_kegiatan = users[i].tahapan_kegiatan;
-	  		let komoditas = users[i].komoditas;
-	  		let alamat_kantor = users[i].alamat_kantor;
-	  		let telepon = users[i].telepon;
-	  		let fax = users[i].fax;
-	  		let website = users[i].website;
-	  		let npwp = users[i].npwp;
-	  		let siup = users[i].siup;
-	  		let tdp = users[i].tdp;
-	  		let skt_minerba = users[i].skt_minerba;
-	  		let lokasi_tambang = users[i].lokasi_tambang;
-	  		let profile_picture = users[i].profile_picture;
+	  	if(userId == users[i].user_id) {
 	  		users[i] = input;
-	  		if(users[i]._id == undefined)
-	  			users[i]._id = id;
-	  		if(users[i].email == undefined)
-	  			users[i].email = email;
-	  		if(users[i].fullname == undefined)
-	  			users[i].fullname = fullname;
-	  		if(users[i].role == undefined)
-	  			users[i].role = role;
-	  		if(users[i].authority == undefined)
-	  			users[i].authority = authority;
-	  		if(users[i].status == undefined)
-	  			users[i].status = status;
-	  		if(users[i].badan_usaha == undefined)
-	  			users[i].badan_usaha = badan_usaha;
-	  		if(users[i].izin == undefined)
-	  			users[i].izin = izin;
-	  		if(users[i].generasi == undefined)
-	  			users[i].generasi = generasi;
-	  		if(users[i].tahapan_kegiatan == undefined)
-	  			users[i].tahapan_kegiatan = tahapan_kegiatan;
-	  		if(users[i].komoditas == undefined)
-	  			users[i].komoditas = komoditas;
-	  		if(users[i].alamat_kantor == undefined)
-	  			users[i].alamat_kantor = alamat_kantor;
-	  		if(users[i].telepon == undefined)
-	  			users[i].telepon = telepon;
-	  		if(users[i].fax == undefined)
-	  			users[i].fax = fax;
-	  		if(users[i].website == undefined)
-	  			users[i].website = website;
-	  		if(users[i].npwp == undefined)
-	  			users[i].npwp = npwp;
-	  		if(users[i].siup == undefined)
-	  			users[i].siup = siup;
-	  		if(users[i].tdp == undefined)
-	  			users[i].tdp = tdp;
-	  		if(users[i].skt_minerba == undefined)
-	  			users[i].skt_minerba = skt_minerba;
-	  		if(users[i].lokasi_tambang == undefined)
-	  			users[i].lokasi_tambang = lokasi_tambang;
-	  		if(users[i].profile_picture == undefined)
-	  			users[i].profile_picture = profile_picture;
 	  		return input;
 	  	}
 	}
@@ -251,12 +195,12 @@ var createUserFunction = function({input}) {
 	return input;
 }
 
-var deleteUserFunction = function({email}) {
-	var userEmail = email;
+var deleteUserFunction = function({user_id}) {
+	var userId = user_id;
   	for(var i = 0; i < users.length; i++) {
-	  	if(userEmail == users[i].email) {
+	  	if(userId == users[i].user_id) {
 	  		users.splice(i, 1);
-	  		return users[i].email;
+	  		return "deleted";
 	  	}
 	}
 }
@@ -293,6 +237,9 @@ exports.root = {
 	commerce: commerceGraphql.root.commerce,
 	commerces: commerceGraphql.root.commerces,
 
+	balances: financeGraphql.root.balances,
+	reports: financeGraphql.root.reports,
+
 	updateUser: updateUserFunction,
 	createUser: createUserFunction,
 	deleteUser: deleteUserFunction,
@@ -303,4 +250,9 @@ exports.root = {
 	updateCommerce: commerceGraphql.root.updateCommerce,
 	createCommerce: commerceGraphql.root.createCommerce,
 	deleteCommerce: commerceGraphql.root.deleteCommerce,
+
+	createBalance: financeGraphql.root.createBalance,
+	deleteBalance: financeGraphql.root.deleteBalance,
+	createReport: financeGraphql.root.createReport,
+	deleteReport: financeGraphql.root.deleteReport,
 };

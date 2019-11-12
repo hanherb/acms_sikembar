@@ -42,12 +42,12 @@ exports.schema = buildSchema(`
 `);
 
 var commerces = [];
-mongo.mongoCommerce("find", {}, function(response) {
-	for(var i = 0; i < response.length; i++) {
-		response[i]._id = response[i]._id.toString();
-		commerces.push(response[i]);
-	}
-});
+// mongo.mongoCommerce("find", {}, function(response) {
+// 	for(var i = 0; i < response.length; i++) {
+// 		response[i]._id = response[i]._id.toString();
+// 		commerces.push(response[i]);
+// 	}
+// });
 
 var getCommerce = function(args) {
 	var itemId = args._id;

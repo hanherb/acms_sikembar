@@ -35,13 +35,14 @@ function getDetail(req, res, path) {
 
 function logger(req, res, next) {
 	if(req.path.split('-')[0] != '/get' && req.path != '/substract-qty' && req.path != '/item-supplied') {
+		console.log(req.headers.user_session)
 		let path = req.path;
-		let userId = req.headers.user_session;
+		let user_id = parseInt(req.headers.user_session);
 		let detail = getDetail(req, res, path);
 
 		let dateObj = getDate();
 		let fulldate = dateObj.date + " " + dateObj.month + " " + dateObj.year + " @ " + dateObj.hour + ":" + dateObj.minute + ":" + dateObj.second;
-		mongo.mongoLogger("insert", {path: path, detail: detail, userId: userId, date: fulldate}, function(response) {
+		mongo.mongoLogger("insert", {path: path, detail: detail, user_id: user_id, date: fulldate}, function(response) {
 			next();
 		});
 	}
@@ -119,6 +120,8 @@ exports.beforeEndPoint = function(req, res, next) {
 		req.path != '/get-laba-rugi-public' &&
 		req.path != '/get-commerce' &&
 		req.path != '/get-user-public' &&
+		req.path != '/xls-test' &&
+		req.path != '/import-csv' &&
 		req.path != '/logout') {
 		// console.log("authorization headers: " + req.headers.authorization);
 		// console.log("user session headers: " + req.headers.user_session);
@@ -135,13 +138,7 @@ exports.beforeEndPoint = function(req, res, next) {
 					res.sendStatus(403);
 				}
 				else {
-					let authority = authorityFilter(req, res, next);
-					if(authority) {
-						logger(req, res, next);
-					}
-					else {
-						res.sendStatus(403);
-					}
+					logger(req, res, next);
 				}
 			});
 		}

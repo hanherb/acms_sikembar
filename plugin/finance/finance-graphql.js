@@ -4,125 +4,258 @@ var {buildSchema} = require('graphql');
 
 exports.schema = buildSchema(`
 	type Query {
-		anggaranBelanja(_id: String!): AnggaranBelanja,
-		anggaranBelanjas: [AnggaranBelanja]
+		balances: [Balances],
+		reports: [Reports]
 	},
 
-	type AnggaranBelanja {
-		_id: String,
-  		kantor_penghasilan_karyawan: String,
-  		kantor_kesejahteraan_karyawan: String,
-  		kantor_komisi_penjualan: String,
-  		kantor_pemeliharaan_kantor: String,
-  		kantor_depresiasi_dan_amortisasi: String,
-  		kantor_promosi_dan_publikasi: String,
-  		kantor_sewa_alat: String,
-  		kantor_pengiriman_barang_perjalanan_dan_komunikasi: String,
-  		kantor_konsultan: String,
-  		kantor_keuangan: String,
-  		kantor_umum_dan_administrasi: String,
-  		kantor_pengembangan_masyarakat: String,
-  		kantor_biaya_lain_lain: String,
-  		site_penghasilan_karyawan: String,
-  		site_pemeliharaan_kantor: String,
-  		site_pengiriman_barang_perjalanan_dan_komunikasi: String,
-  		site_umum_dan_administrasi: String,
-  		site_biaya_analisa_mineral_logam: String,
-  		site_biaya_lain_lain: String,
-  		bangunan: String,
-  		sarana_dan_prasarana: String,
-  		mesin: String,
-  		peralatan: String,
-  		kendaraan_dan_angkutan: String,
-  		peralatan_eksplorasi: String,
-  		kapal: String,
-  		alat_alat_perabotan: String,
-  		status_dan_tahun: String,
-  		upload_by: String,
-  		tahapan_kegiatan: String,
-  	},
+	type Budgets{
+        budget_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+        category_id: ID!
+    },
+
+    type Budget_categories{
+        category_id: ID!
+        category_name: String!
+    },
+
+	type Currencies{
+        currency_id: ID!
+        currency_name: String!
+    },
+
+	type Cashflows{
+        cashflow_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+        category_id: ID!
+    },
+
+	type Cashflow_categories{
+        category_id: ID!
+        category_name: String!
+    },
+
+	type Assumptions{
+        assumption_id: ID!
+        report_id: ID!
+        currency_id: ID!
+        unit_rate: Int!
+        detail: String!
+        volume_unit_id: ID!
+        volume_value: Int!
+        price_value: Int!
+        cutoff_grade_value: Int!
+        cutoff_grade_unit: String!
+    },
+
+	type Volume_units{
+        volume_unit_id: ID!
+        volume_unit_text: String!
+    },
+
+	type Assumption_fuel_prices{
+        assumption_fuel_price_id: ID!
+        report_id: ID!
+        currency_id: ID!
+        unit_rate: Int!
+        detail: String!
+        volume_unit_id: ID!
+        volume_value: Int!
+    },
+
+	type Costofgoods{
+        costofgood_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+        category_id: ID!
+    },
+
+	type Cost_of_goods_categories{
+        category_id: ID!
+        category_name: String!
+    },
+
+	type Investments{
+        investment_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+    },
+
+	type Other_finances{
+        other_finance_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+    },
+
+	type Profit_losses{
+        profit_loss_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+    },
+
+	type Royalties{
+        royalty_id: ID!
+        report_id: ID!
+        currency_id: ID!
+        unit_rate: Int!
+        detail: String!
+        volume_unit_id: ID!
+        value: Int!
+    },
+
+	type Reports{
+        report_id: Int!
+        user_id: Int!
+        year: Int!,
+        term: String!
+        report_type: String!
+        currency: String!
+        rate: Int!,
+        approved: Int!,
+        flagged_for_deletion: Int,
+    },
+
+    type Operation_costs{
+        operation_cost_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+    },
+
+	type National_incomes{
+        profit_loss_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+        category_id: ID!
+    },
+
+	type National_income_categories{
+        category_id: ID!
+        category_name: String!
+    },
+
+	type Balances{
+        balance_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+        category: String
+        sub_category: String
+    },
+
+	type Balance_categories{
+        category_id: ID!
+        category_name: String!
+    },
+
+	type Source_of_financings{
+        source_of_financing_id: ID!
+        report_id: ID!
+        detail: String!
+        value: Int!
+        category_id: ID!
+    },
+
+	type Sof_categories{
+        category_id: ID!
+        category_name: String!
+    },
 
   	type Mutation {
-		updateAnggaranBelanja(_id: String!, input: AnggaranBelanjaInput): AnggaranBelanja,
-		createAnggaranBelanja(input: AnggaranBelanjaInput): AnggaranBelanja,
-		deleteAnggaranBelanja(_id: String!): AnggaranBelanja
+		createBalance(input: BalancesInput): Balances,
+		deleteBalance(balance_id: Int!): Balances,
+		createReport(input: ReportsInput): Reports,
+		deleteReport(report_id: Int!): Reports,
 	},
 
-	input AnggaranBelanjaInput {
-		_id: String,
-  		kantor_penghasilan_karyawan: String,
-  		kantor_kesejahteraan_karyawan: String,
-  		kantor_komisi_penjualan: String,
-  		kantor_pemeliharaan_kantor: String,
-  		kantor_depresiasi_dan_amortisasi: String,
-  		kantor_promosi_dan_publikasi: String,
-  		kantor_sewa_alat: String,
-  		kantor_pengiriman_barang_perjalanan_dan_komunikasi: String,
-  		kantor_konsultan: String,
-  		kantor_keuangan: String,
-  		kantor_umum_dan_administrasi: String,
-  		kantor_pengembangan_masyarakat: String,
-  		kantor_biaya_lain_lain: String,
-  		site_penghasilan_karyawan: String,
-  		site_pemeliharaan_kantor: String,
-  		site_pengiriman_barang_perjalanan_dan_komunikasi: String,
-  		site_umum_dan_administrasi: String,
-  		site_biaya_analisa_mineral_logam: String,
-  		site_biaya_lain_lain: String,
-  		bangunan: String,
-  		sarana_dan_prasarana: String,
-  		mesin: String,
-  		peralatan: String,
-  		kendaraan_dan_angkutan: String,
-  		peralatan_eksplorasi: String,
-  		kapal: String,
-  		alat_alat_perabotan: String,
-  		status_dan_tahun: String,
-  		upload_date: String,
-  		upload_by: String,
-  		tahapan_kegiatan: String,
-  	}
+	input BalancesInput{
+        balance_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+        category: String
+        sub_category: String
+    },
+
+    input ReportsInput{
+        report_id: Int!
+        user_id: Int!
+        year: Int!,
+        term: String!
+        report_type: String!
+        currency: String!
+        rate: Int!,
+        approved: Int!,
+        flagged_for_deletion: Int,
+    },
 `);
 
-var anggaranBelanjas = [];
-mongo.mongoAnggaranBelanja("find", {}, function(response) {
+var balances = [];
+mongo.mongoNeraca("find", {}, function(response) {
 	for(var i = 0; i < response.length; i++) {
-		response[i]._id = response[i]._id.toString();
-		anggaranBelanjas.push(response[i]);
+		balances.push(response[i]);
 	}
 });
 
-var getAnggaranBelanja = function(args) {
-	var itemId = args._id;
-  	for(var i = 0; i < anggaranBelanjas.length; i++) {
-	  	if(itemId == anggaranBelanjas[i]._id) {
-	  		return anggaranBelanjas[i];
+var reports = [];
+mongo.mongoReport("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		reports.push(response[i]);
+	}
+});
+
+var getBalances = function() {
+	return balances;
+}
+
+var createBalanceFunction = function({input}) {
+	balances.push(input);
+	return input;
+}
+
+var deleteBalanceFunction = function({balance_id}) {
+	var balanceId = balance_id;
+  	for(var i = 0; i < balances.length; i++) {
+	  	if(balanceId == balances[i].balance_id) {
+	  		balances.splice(i, 1);
+	  		return "deleted";
 	  	}
 	}
 }
 
-var getAnggaranBelanjas = function() {
-	return anggaranBelanjas;
+var getReports = function() {
+	return reports;
 }
 
-var createAnggaranBelanjaFunction = function({input}) {
-	anggaranBelanjas.push(input);
+var createReportFunction = function({input}) {
+	reports.push(input);
 	return input;
 }
 
-var deleteAnggaranBelanjaFunction = function({_id}) {
-	var itemId = _id;
-  	for(var i = 0; i < anggaranBelanjas.length; i++) {
-	  	if(itemId == anggaranBelanjas[i]._id) {
-	  		anggaranBelanjas.splice(i, 1);
-	  		return anggaranBelanjas[i]._id;
+var deleteReportFunction = function({report_id}) {
+	var reportId = report_id;
+  	for(var i = 0; i < reports.length; i++) {
+	  	if(reportId == reports[i].report_id) {
+	  		reports.splice(i, 1);
+	  		return "deleted";
 	  	}
 	}
 }
 
 exports.root = {
-	anggaranBelanja: getAnggaranBelanja,
-	anggaranBelanjas: getAnggaranBelanjas,
-	createAnggaranBelanja: createAnggaranBelanjaFunction,
-	deleteAnggaranBelanja: deleteAnggaranBelanjaFunction,
+	balances: getBalances,
+	reports: getReports,
+	createBalance: createBalanceFunction,
+	deleteBalance: deleteBalanceFunction,
+	createReport: createReportFunction,
+	deleteReport: deleteReportFunction,
 };

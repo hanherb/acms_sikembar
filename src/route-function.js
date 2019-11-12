@@ -3,6 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const node_xj = require("xls-to-json");
 const mongodb = require('mongodb');
 const mongo = require('./mongo-connect');
 
@@ -22,7 +23,6 @@ exports.getUser = function(req, res) {
 }
 
 exports.getLog = function(req, res) {
-	console.log("kuda");
 	mongo.mongoLogger("find", {}, function(response) {
 		res.json(response);
 	});
@@ -41,34 +41,19 @@ exports.loginUser = function(req, res) {
 }
 
 exports.updateUser = function(req, res) {
-	let query = [{email: req.body.email}, {$set: {
-		fullname: req.body.fullname, 
-		role: req.body.role, 
-		authority: req.body.authority,
-		status: req.body.status,
-		badan_usaha: req.body.badan_usaha,
-	    izin: req.body.izin,
-	    generasi: req.body.generasi,
-	    tahapan_kegiatan: req.body.tahapan_kegiatan,
-	    komoditas: req.body.komoditas,
-	    alamat_kantor: req.body.alamat_kantor,
-	    telepon: req.body.telepon,
-	    fax: req.body.fax,
-	    website: req.body.website,
-	    npwp: req.body.npwp,
-	    siup: req.body.siup,
-	    tdp: req.body.tdp,
-	    skt_minerba: req.body.skt_minerba,
-	    lokasi_tambang: req.body.lokasi_tambang,
-		profile_picture: req.body.profile_picture,
-	}}];
+	let query = [{user_id: req.body.user_id}, {
+		username: req.body.username,
+		fullname: req.body.fullname,
+		password: req.body.password,
+		role: req.body.role
+	}];
 	mongo.mongoUser("update", query, function(response) {
 		res.json(response);
 	});
 }
 
 exports.deleteUser = function(req, res) {
-	let query = {email: req.body.email};
+	let query = {user_id: req.body.user_id};
 	mongo.mongoUser("delete", query, function(response) {
 		res.json(response);
 	});
@@ -174,12 +159,33 @@ exports.addAsumsiKeuangan = function(req, res) {
 	});
 }
 
+exports.addReport = function(req, res) {
+	let obj = {
+		user_id: req.body.user_id,
+    	year: req.body.year,
+		report_type: req.body.report_type,
+		rate: req.body.rate,
+		approved: req.body.approved,
+		flagged_for_deletion: req.body.flagged_for_deletion,
+		term: req.body.term,
+		currency: req.body.currency
+	};
+	mongo.mongoReport("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getReport = function(req, res) {
+	res.json(1);
+}
+
 exports.addNeraca = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan,
-		komoditas: req.body.komoditas
+        report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value,
+        category: req.body.category,
+        sub_category: req.body.sub_category
 	};
 	mongo.mongoNeraca("insert", obj, function(response) {
 		res.json(response);
@@ -187,9 +193,7 @@ exports.addNeraca = function(req, res) {
 }
 
 exports.getNeraca = function(req, res) {
-	mongo.mongoNeraca("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addLabaRugi = function(req, res) {

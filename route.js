@@ -53,6 +53,10 @@ router.route('/get-komoditas').get(function(req, res) {rf.getKomoditas(req, res)
 
 router.route('/add-komoditas').post(function(req, res) {rf.addKomoditas(req, res)});
 
+router.route('/get-report').get(function(req, res) {rf.getReport(req, res)});
+
+router.route('/add-report').post(function(req, res) {rf.addReport(req, res)});
+
 router.route('/get-asumsi-keuangan').get(function(req, res) {rf.getAsumsiKeuangan(req, res)});
 
 router.route('/add-asumsi-keuangan').post(function(req, res) {rf.addAsumsiKeuangan(req, res)});

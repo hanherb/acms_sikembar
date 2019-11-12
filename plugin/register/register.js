@@ -3,12 +3,10 @@ const mongo = require('../../src/mongo-connect');
 
 exports.register = function(req, res) {
 	let obj = {
-		email: req.body.email,
+		username: req.body.username,
 		fullname: req.body.fullname,
 		password: req.body.password,
-		role: req.body.role,
-		authority: req.body.authority,
-		status: req.body.status
+		role: req.body.role
 	};
 	mongo.mongoUser("insert", obj, function(response) {
 		res.json(response);
