@@ -254,7 +254,7 @@ DROP TABLE IF EXISTS `company_types`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company_types` (
   `company_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_type_name` text NOT NULL,
+  `company_type_name` varchar(255) NOT NULL,
   PRIMARY KEY (`company_type_id`),
   UNIQUE KEY `company_type_name` (`company_type_name`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
