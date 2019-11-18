@@ -5,6 +5,8 @@ var {buildSchema} = require('graphql');
 exports.schema = buildSchema(`
 	type Query {
 		balances: [Balances],
+		profit_losses: [ProfitLosses],
+		national_incomes: [NationalIncomes],
 		reports: [Reports]
 	},
 
@@ -94,11 +96,12 @@ exports.schema = buildSchema(`
         value: Int!
     },
 
-	type Profit_losses{
-        profit_loss_id: ID!
-        report_id: ID!
+	type ProfitLosses{
+        profit_loss_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
+        category: String!
     },
 
 	type Royalties{
@@ -130,12 +133,12 @@ exports.schema = buildSchema(`
         value: Int!
     },
 
-	type National_incomes{
-        profit_loss_id: ID!
-        report_id: ID!
+	type NationalIncomes{
+        profit_loss_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
-        category_id: ID!
+        category_id: String!
     },
 
 	type National_income_categories{
@@ -173,6 +176,10 @@ exports.schema = buildSchema(`
   	type Mutation {
 		createBalance(input: BalancesInput): Balances,
 		deleteBalance(balance_id: Int!): Balances,
+		createProfitLoss(input: ProfitLossesInput): ProfitLosses,
+		deleteProfitLoss(profit_loss_id: Int!): ProfitLosses,
+		createNationalIncome(input: NationalIncomesInput): NationalIncomes,
+		deleteNationalIncome(national_income_id: Int!): NationalIncomes,
 		createReport(input: ReportsInput): Reports,
 		deleteReport(report_id: Int!): Reports,
 	},
@@ -184,6 +191,22 @@ exports.schema = buildSchema(`
         value: Int!
         category: String
         sub_category: String
+    },
+
+    input ProfitLossesInput{
+        profit_loss_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+        category: String!
+    },
+
+    input NationalIncomesInput{
+        profit_loss_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+        category_id: String!
     },
 
     input ReportsInput{
@@ -203,6 +226,20 @@ var balances = [];
 mongo.mongoNeraca("find", {}, function(response) {
 	for(var i = 0; i < response.length; i++) {
 		balances.push(response[i]);
+	}
+});
+
+var profit_losses = [];
+mongo.mongoLabaRugi("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		profit_losses.push(response[i]);
+	}
+});
+
+var national_incomes = [];
+mongo.mongoPenerimaanNegara("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		national_incomes.push(response[i]);
 	}
 });
 
@@ -232,6 +269,44 @@ var deleteBalanceFunction = function({balance_id}) {
 	}
 }
 
+var getProfitLosses = function() {
+	return profit_losses;
+}
+
+var createProfitLossFunction = function({input}) {
+	profit_losses.push(input);
+	return input;
+}
+
+var deleteProfitLossFunction = function({profit_loss_id}) {
+	var profitLossId = profit_loss_id;
+  	for(var i = 0; i < profit_losses.length; i++) {
+	  	if(profitLossId == profit_losses[i].profit_loss_id) {
+	  		profit_losses.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getNationalIncomes = function() {
+	return national_incomes;
+}
+
+var createNationalIncomeFunction = function({input}) {
+	national_incomes.push(input);
+	return input;
+}
+
+var deleteNationalIncomeFunction = function({national_income_id}) {
+	var nationalIncomeId = national_income_id;
+  	for(var i = 0; i < national_incomes.length; i++) {
+	  	if(nationalIncomeId == national_incomes[i].national_income_id) {
+	  		national_incomes.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
 var getReports = function() {
 	return reports;
 }
@@ -253,9 +328,15 @@ var deleteReportFunction = function({report_id}) {
 
 exports.root = {
 	balances: getBalances,
+	profit_losses: getProfitLosses,
+	national_incomes: getNationalIncomes,
 	reports: getReports,
 	createBalance: createBalanceFunction,
 	deleteBalance: deleteBalanceFunction,
+	createProfitLoss: createProfitLossFunction,
+	deleteProfitLoss: deleteProfitLossFunction,
+	createNationalIncome: createNationalIncomeFunction,
+	deleteNationalIncome: deleteNationalIncomeFunction,
 	createReport: createReportFunction,
 	deleteReport: deleteReportFunction,
 };

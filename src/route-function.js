@@ -198,10 +198,10 @@ exports.getNeraca = function(req, res) {
 
 exports.addLabaRugi = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan,
-		komoditas: req.body.komoditas
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value,
+        category: req.body.category
 	};
 	mongo.mongoLabaRugi("insert", obj, function(response) {
 		res.json(response);
@@ -209,9 +209,7 @@ exports.addLabaRugi = function(req, res) {
 }
 
 exports.getLabaRugi = function(req, res) {
-	mongo.mongoLabaRugi("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addHargaPokok = function(req, res) {
@@ -267,19 +265,18 @@ exports.getInvestasi = function(req, res) {
 
 exports.addPenerimaanNegara = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value,
+        category: req.body.category
 	};
-	mongo.mongoPenerimaanNegara("insert", obj, function(response) {
+	mongo.mongoLabaRugi("insert", obj, function(response) {
 		res.json(response);
 	});
 }
 
 exports.getPenerimaanNegara = function(req, res) {
-	mongo.mongoPenerimaanNegara("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addKeuanganLainnya = function(req, res) {

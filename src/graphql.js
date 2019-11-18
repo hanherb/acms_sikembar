@@ -238,6 +238,8 @@ exports.root = {
 	commerces: commerceGraphql.root.commerces,
 
 	balances: financeGraphql.root.balances,
+	profit_losses: financeGraphql.root.profit_losses,
+	national_incomes: financeGraphql.root.national_incomes,
 	reports: financeGraphql.root.reports,
 
 	updateUser: updateUserFunction,
@@ -253,6 +255,10 @@ exports.root = {
 
 	createBalance: financeGraphql.root.createBalance,
 	deleteBalance: financeGraphql.root.deleteBalance,
+	createProfitLoss: financeGraphql.root.createProfitLoss,
+	deleteProfitLoss: financeGraphql.root.deleteProfitLoss,
+	createNationalIncome: financeGraphql.root.createNationalIncome,
+	deleteNationalIncome: financeGraphql.root.deleteNationalIncome,
 	createReport: financeGraphql.root.createReport,
 	deleteReport: financeGraphql.root.deleteReport,
 };

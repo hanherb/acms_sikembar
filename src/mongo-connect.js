@@ -101,6 +101,64 @@ exports.mongoNeraca = function(action, query, callback) {
 	}
 }
 
+exports.mongoLabaRugi = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from profit_losses")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into profit_losses values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"', '"+query.category+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoPenerimaanNegara = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from national_incomes")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into national_incomes values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"', '"+query.category+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
 exports.mongoReport = function(action, query, callback) {
 	if(action == "find") {
 		console.log("Connection Established. Action="+action);
