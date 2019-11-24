@@ -34,7 +34,12 @@ function getDetail(req, res, path) {
 }
 
 function logger(req, res, next) {
-	if(req.path.split('-')[0] != '/get' && req.path != '/substract-qty' && req.path != '/item-supplied' && req.path != '/add-neraca' && req.path != '/add-laba-rugi') {
+	if(req.path.split('-')[0] != '/get' && 
+		req.path != '/substract-qty' &&
+	 	req.path != '/item-supplied' &&
+	  	req.path != '/add-neraca' &&
+	   	req.path != '/add-laba-rugi' && 
+	   	req.path != '/add-penerimaan-negara') {
 		console.log(req.headers.user_session)
 		let path = req.path;
 		let user_id = parseInt(req.headers.user_session);

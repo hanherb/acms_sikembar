@@ -7,15 +7,22 @@ exports.schema = buildSchema(`
 		balances: [Balances],
 		profit_losses: [ProfitLosses],
 		national_incomes: [NationalIncomes],
+		cashflows: [Cashflows],
+		budgets: [Budgets],
+		costofgoods: [Costofgoods],
+		source_of_financings: [SourceOfFinancings],
+		investments: [Investments],
+		other_finances: [OtherFinances],
+		assumptions: [Assumptions],
 		reports: [Reports]
 	},
 
 	type Budgets{
-        budget_id: ID!
-        report_id: ID!
+        budget_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
-        category_id: ID!
+        category: String!
     },
 
     type Budget_categories{
@@ -29,11 +36,11 @@ exports.schema = buildSchema(`
     },
 
 	type Cashflows{
-        cashflow_id: ID!
-        report_id: ID!
+        cashflow_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
-        category_id: ID!
+        category: String!
     },
 
 	type Cashflow_categories{
@@ -42,12 +49,12 @@ exports.schema = buildSchema(`
     },
 
 	type Assumptions{
-        assumption_id: ID!
-        report_id: ID!
-        currency_id: ID!
+        assumption_id: Int!
+        report_id: Int!
+        currency: String!
         unit_rate: Int!
         detail: String!
-        volume_unit_id: ID!
+        volume_unit: String!
         volume_value: Int!
         price_value: Int!
         cutoff_grade_value: Int!
@@ -70,11 +77,10 @@ exports.schema = buildSchema(`
     },
 
 	type Costofgoods{
-        costofgood_id: ID!
-        report_id: ID!
+        costofgood_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
-        category_id: ID!
     },
 
 	type Cost_of_goods_categories{
@@ -83,15 +89,15 @@ exports.schema = buildSchema(`
     },
 
 	type Investments{
-        investment_id: ID!
-        report_id: ID!
+        investment_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
     },
 
-	type Other_finances{
-        other_finance_id: ID!
-        report_id: ID!
+	type OtherFinances{
+        other_finance_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
     },
@@ -134,11 +140,11 @@ exports.schema = buildSchema(`
     },
 
 	type NationalIncomes{
-        profit_loss_id: Int!
+        national_income_id: Int!
         report_id: Int!
         detail: String!
         value: Int!
-        category_id: String!
+        category: String!
     },
 
 	type National_income_categories{
@@ -160,12 +166,11 @@ exports.schema = buildSchema(`
         category_name: String!
     },
 
-	type Source_of_financings{
-        source_of_financing_id: ID!
-        report_id: ID!
+	type SourceOfFinancings{
+        source_of_financing_id: Int!
+        report_id: Int!
         detail: String!
         value: Int!
-        category_id: ID!
     },
 
 	type Sof_categories{
@@ -180,6 +185,20 @@ exports.schema = buildSchema(`
 		deleteProfitLoss(profit_loss_id: Int!): ProfitLosses,
 		createNationalIncome(input: NationalIncomesInput): NationalIncomes,
 		deleteNationalIncome(national_income_id: Int!): NationalIncomes,
+		createCashflow(input: CashflowsInput): Cashflows,
+		deleteCashflow(cashflow_id: Int!): Cashflows,
+		createBudget(input: BudgetsInput): Budgets,
+		deleteBudget(budget_id: Int!): Budgets,
+		createCostofgood(input: CostofgoodsInput): Costofgoods,
+		deleteCostofgood(costofgood_id: Int!): Costofgoods,
+		createSourceOfFinancing(input: SourceOfFinancingsInput): SourceOfFinancings,
+		deleteSourceOfFinancing(source_of_financing_id: Int!): SourceOfFinancings,
+		createInvestment(input: InvestmentsInput): Investments,
+		deleteInvestment(investment_id: Int!): Investments,
+		createOtherFinance(input: OtherFinancesInput): OtherFinances,
+		deleteOtherFinance(other_finance_id: Int!): OtherFinances,
+		createAssumption(input: AssumptionsInput): Assumptions,
+		deleteAssumption(assumption_id: Int!): Assumptions,
 		createReport(input: ReportsInput): Reports,
 		deleteReport(report_id: Int!): Reports,
 	},
@@ -202,23 +221,80 @@ exports.schema = buildSchema(`
     },
 
     input NationalIncomesInput{
-        profit_loss_id: Int!
+        national_income_id: Int!
         report_id: Int!
         detail: String!
         value: Int!
-        category_id: String!
+        category: String!
+    },
+
+    input CashflowsInput{
+        cashflow_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+        category: String!
+    },
+
+    input BudgetsInput{
+        budget_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+        category: String!
+    },
+
+    input CostofgoodsInput{
+        costofgood_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+    },
+
+    input SourceOfFinancingsInput{
+        source_of_financing_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+    },
+
+    input InvestmentsInput{
+        investment_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+    },
+
+    input OtherFinancesInput{
+        other_finance_id: Int!
+        report_id: Int!
+        detail: String!
+        value: Int!
+    },
+
+    input AssumptionsInput{
+        assumption_id: Int!
+        report_id: Int!
+        currency: String!
+        unit_rate: Int!
+        detail: String!
+        volume_unit: String!
+        volume_value: Int!
+        price_value: Int!
+        cutoff_grade_value: Int!
+        cutoff_grade_unit: String!
     },
 
     input ReportsInput{
         report_id: Int!
         user_id: Int!
-        year: Int!,
+        year: Int!
         term: String!
         report_type: String!
         currency: String!
-        rate: Int!,
-        approved: Int!,
-        flagged_for_deletion: Int,
+        rate: Int!
+        approved: Int!
+        flagged_for_deletion: Int
     },
 `);
 
@@ -240,6 +316,55 @@ var national_incomes = [];
 mongo.mongoPenerimaanNegara("find", {}, function(response) {
 	for(var i = 0; i < response.length; i++) {
 		national_incomes.push(response[i]);
+	}
+});
+
+var cashflows = [];
+mongo.mongoArusKas("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		cashflows.push(response[i]);
+	}
+});
+
+var budgets = [];
+mongo.mongoAnggaranBelanja("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		budgets.push(response[i]);
+	}
+});
+
+var costofgoods = [];
+mongo.mongoHargaPokok("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		costofgoods.push(response[i]);
+	}
+});
+
+var source_of_financings = [];
+mongo.mongoSumberPembiayaan("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		source_of_financings.push(response[i]);
+	}
+});
+
+var investments = [];
+mongo.mongoInvestasi("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		investments.push(response[i]);
+	}
+});
+
+var other_finances = [];
+mongo.mongoKeuanganLainnya("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		other_finances.push(response[i]);
+	}
+});
+
+var assumptions = [];
+mongo.mongoAsumsiKeuangan("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		assumptions.push(response[i]);
 	}
 });
 
@@ -307,6 +432,139 @@ var deleteNationalIncomeFunction = function({national_income_id}) {
 	}
 }
 
+var getCashflows = function() {
+	return cashflows;
+}
+
+var createCashflowFunction = function({input}) {
+	cashflows.push(input);
+	return input;
+}
+
+var deleteCashflowFunction = function({cashflow_id}) {
+	var cashflowId = cashflow_id;
+  	for(var i = 0; i < cashflows.length; i++) {
+	  	if(cashflowId == cashflows[i].cashflow_id) {
+	  		cashflows.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getBudgets = function() {
+	return budgets;
+}
+
+var createBudgetFunction = function({input}) {
+	budgets.push(input);
+	return input;
+}
+
+var deleteBudgetFunction = function({budget_id}) {
+	var budgetId = budget_id;
+  	for(var i = 0; i < budgets.length; i++) {
+	  	if(budgetId == budgets[i].budget_id) {
+	  		budgets.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getCostofgoods = function() {
+	return costofgoods;
+}
+
+var createCostofgoodFunction = function({input}) {
+	costofgoods.push(input);
+	return input;
+}
+
+var deleteCostofgoodFunction = function({costofgood_id}) {
+	var costofgoodId = costofgood_id;
+  	for(var i = 0; i < costofgoods.length; i++) {
+	  	if(costofgoodId == costofgoods[i].costofgood_id) {
+	  		costofgoods.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getSourceOfFinancings = function() {
+	return source_of_financings;
+}
+
+var createSourceOfFinancingFunction = function({input}) {
+	source_of_financings.push(input);
+	return input;
+}
+
+var deleteSourceOfFinancingFunction = function({source_of_financing_id}) {
+	var sourceOfFinancingId = source_of_financing_id;
+  	for(var i = 0; i < source_of_financings.length; i++) {
+	  	if(sourceOfFinancingId == source_of_financings[i].source_of_financing_id) {
+	  		source_of_financings.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getInvestments = function() {
+	return investments;
+}
+
+var createInvestmentFunction = function({input}) {
+	investments.push(input);
+	return input;
+}
+
+var deleteInvestmentFunction = function({investment_id}) {
+	var investmentId = investment_id;
+  	for(var i = 0; i < investments.length; i++) {
+	  	if(investmentId == investments[i].investment_id) {
+	  		investments.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getOtherFinances = function() {
+	return other_finances;
+}
+
+var createOtherFinanceFunction = function({input}) {
+	other_finances.push(input);
+	return input;
+}
+
+var deleteOtherFinanceFunction = function({other_finance_id}) {
+	var otherFinanceId = other_finance_id;
+  	for(var i = 0; i < other_finances.length; i++) {
+	  	if(otherFinanceId == other_finances[i].other_finance_id) {
+	  		other_finances.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
+var getAssumptions = function() {
+	return assumptions;
+}
+
+var createAssumptionFunction = function({input}) {
+	assumptions.push(input);
+	return input;
+}
+
+var deleteAssumptionFunction = function({assumption_id}) {
+	var assumptionId = assumption_id;
+  	for(var i = 0; i < assumptions.length; i++) {
+	  	if(assumptionId == assumptions[i].assumption_id) {
+	  		assumptions.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
 var getReports = function() {
 	return reports;
 }
@@ -330,6 +588,13 @@ exports.root = {
 	balances: getBalances,
 	profit_losses: getProfitLosses,
 	national_incomes: getNationalIncomes,
+	cashflows: getCashflows,
+	budgets: getBudgets,
+	costofgoods: getCostofgoods,
+	source_of_financings: getSourceOfFinancings,
+	investments: getInvestments,
+	other_finances: getOtherFinances,
+	assumptions: getAssumptions,
 	reports: getReports,
 	createBalance: createBalanceFunction,
 	deleteBalance: deleteBalanceFunction,
@@ -337,6 +602,20 @@ exports.root = {
 	deleteProfitLoss: deleteProfitLossFunction,
 	createNationalIncome: createNationalIncomeFunction,
 	deleteNationalIncome: deleteNationalIncomeFunction,
+	createCashflow: createCashflowFunction,
+	deleteCashflow: deleteCashflowFunction,
+	createBudget: createBudgetFunction,
+	deleteBudget: deleteBudgetFunction,
+	createCostofgood: createCostofgoodFunction,
+	deleteCostofgood: deleteCostofgoodFunction,
+	createSourceOfFinancing: createSourceOfFinancingFunction,
+	deleteSourceOfFinancing: deleteSourceOfFinancingFunction,
+	createInvestment: createInvestmentFunction,
+	deleteInvestment: deleteInvestmentFunction,
+	createOtherFinance: createOtherFinanceFunction,
+	deleteOtherFinance: deleteOtherFinanceFunction,
+	createAssumption: createAssumptionFunction,
+	deleteAssumption: deleteAssumptionFunction,
 	createReport: createReportFunction,
 	deleteReport: deleteReportFunction,
 };

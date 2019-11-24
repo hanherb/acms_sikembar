@@ -159,6 +159,180 @@ exports.mongoPenerimaanNegara = function(action, query, callback) {
 	}
 }
 
+exports.mongoArusKas = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from cashflows")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into cashflows values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"', '"+query.category+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoAnggaranBelanja = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from budgets")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into budgets values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"', '"+query.category+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoHargaPokok = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from costofgoods")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into costofgoods values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoSumberPembiayaan = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from source_of_financings")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into source_of_financings values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoInvestasi = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from investments")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into investments values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoKeuanganLainnya = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from other_finances")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into other_finances values (null, '"+query.report_id+"', '"+query.detail+"', '"+query.value+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
 exports.mongoReport = function(action, query, callback) {
 	if(action == "find") {
 		console.log("Connection Established. Action="+action);
@@ -183,6 +357,43 @@ exports.mongoReport = function(action, query, callback) {
 			"', '"+query.term+
 			"', '"+query.currency+
 			"', "+query.year+")")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoAsumsiKeuangan = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from assumptions")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into assumptions values (null, '"+query.report_id+
+			"', '"+query.unit_rate+
+			"', '"+query.detail+
+			"', '"+query.volume_value+
+			"', '"+query.price_value+
+			"', '"+query.cutoff_grade_value+
+			"', '"+query.cutoff_grade_unit+
+			"', '"+query.volume_unit+
+			"', '"+query.currency+"')")
 		.then(results => {
 		    if(callback)
 				return callback(results);

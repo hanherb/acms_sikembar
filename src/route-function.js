@@ -143,16 +143,20 @@ exports.addKomoditas = function(req, res) {
 }
 
 exports.getAsumsiKeuangan = function(req, res) {
-	mongo.mongoAsumsiKeuangan("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addAsumsiKeuangan = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+        report_id: req.body.report_id,
+        currency: req.body.currency,
+        unit_rate: req.body.unit_rate,
+        detail: req.body.detail,
+        volume_unit: req.body.volume_unit,
+        volume_value: req.body.volume_value,
+        price_value: req.body.price_value,
+        cutoff_grade_value: req.body.cutoff_grade_value,
+        cutoff_grade_unit: req.body.cutoff_grade_unit
 	};
 	mongo.mongoAsumsiKeuangan("insert", obj, function(response) {
 		res.json(response);
@@ -214,9 +218,9 @@ exports.getLabaRugi = function(req, res) {
 
 exports.addHargaPokok = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value
 	};
 	mongo.mongoHargaPokok("insert", obj, function(response) {
 		res.json(response);
@@ -224,16 +228,15 @@ exports.addHargaPokok = function(req, res) {
 }
 
 exports.getHargaPokok = function(req, res) {
-	mongo.mongoHargaPokok("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addArusKas = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value,
+        category: req.body.category
 	};
 	mongo.mongoArusKas("insert", obj, function(response) {
 		res.json(response);
@@ -241,16 +244,14 @@ exports.addArusKas = function(req, res) {
 }
 
 exports.getArusKas = function(req, res) {
-	mongo.mongoArusKas("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1)
 }
 
 exports.addInvestasi = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value
 	};
 	mongo.mongoInvestasi("insert", obj, function(response) {
 		res.json(response);
@@ -258,9 +259,7 @@ exports.addInvestasi = function(req, res) {
 }
 
 exports.getInvestasi = function(req, res) {
-	mongo.mongoInvestasi("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addPenerimaanNegara = function(req, res) {
@@ -270,7 +269,7 @@ exports.addPenerimaanNegara = function(req, res) {
         value: req.body.value,
         category: req.body.category
 	};
-	mongo.mongoLabaRugi("insert", obj, function(response) {
+	mongo.mongoPenerimaanNegara("insert", obj, function(response) {
 		res.json(response);
 	});
 }
@@ -281,9 +280,9 @@ exports.getPenerimaanNegara = function(req, res) {
 
 exports.addKeuanganLainnya = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value
 	};
 	mongo.mongoKeuanganLainnya("insert", obj, function(response) {
 		res.json(response);
@@ -291,16 +290,14 @@ exports.addKeuanganLainnya = function(req, res) {
 }
 
 exports.getKeuanganLainnya = function(req, res) {
-	mongo.mongoKeuanganLainnya("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addSumberPembiayaan = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value
 	};
 	mongo.mongoSumberPembiayaan("insert", obj, function(response) {
 		res.json(response);
@@ -308,16 +305,15 @@ exports.addSumberPembiayaan = function(req, res) {
 }
 
 exports.getSumberPembiayaan = function(req, res) {
-	mongo.mongoSumberPembiayaan("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addAnggaranBelanja = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by,
-		tahapan_kegiatan: req.body.tahapan_kegiatan
+		report_id: req.body.report_id,
+        detail: req.body.detail,
+        value: req.body.value,
+        category: req.body.category
 	};
 	mongo.mongoAnggaranBelanja("insert", obj, function(response) {
 		res.json(response);
@@ -325,9 +321,7 @@ exports.addAnggaranBelanja = function(req, res) {
 }
 
 exports.getAnggaranBelanja = function(req, res) {
-	mongo.mongoAnggaranBelanja("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1);
 }
 
 exports.addBelanjaBarang = function(req, res) {
