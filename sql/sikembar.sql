@@ -27,7 +27,7 @@ CREATE TABLE `assumption_fuel_prices` (
   `report_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
   `unit_rate` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `volume_unit_id` int(11) NOT NULL,
   `volume_value` int(11) NOT NULL,
   PRIMARY KEY (`assumption_fuel_price_id`),
@@ -60,7 +60,7 @@ CREATE TABLE `assumptions` (
   `assumption_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
   `unit_rate` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `volume_value` int(11) NOT NULL,
   `price_value` int(11) NOT NULL,
   `cutoff_grade_value` int(11) NOT NULL,
@@ -92,7 +92,7 @@ DROP TABLE IF EXISTS `balance_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `balance_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `balances`;
 CREATE TABLE `balances` (
   `balance_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   `category` varchar(255) DEFAULT NULL,
   `sub_category` varchar(255) DEFAULT NULL,
@@ -145,7 +145,7 @@ DROP TABLE IF EXISTS `budget_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `budget_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -169,7 +169,7 @@ DROP TABLE IF EXISTS `budgets`;
 CREATE TABLE `budgets` (
   `budget_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   `category` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`budget_id`),
@@ -197,7 +197,7 @@ DROP TABLE IF EXISTS `cashflow_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cashflow_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -221,7 +221,7 @@ DROP TABLE IF EXISTS `cashflows`;
 CREATE TABLE `cashflows` (
   `cashflow_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   `category` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cashflow_id`),
@@ -273,7 +273,7 @@ DROP TABLE IF EXISTS `cost_of_goods_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cost_of_goods_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -297,7 +297,7 @@ DROP TABLE IF EXISTS `costofgoods`;
 CREATE TABLE `costofgoods` (
   `costofgood_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`costofgood_id`),
   KEY `costofgoods_fk0` (`report_id`),
@@ -324,7 +324,7 @@ DROP TABLE IF EXISTS `currencies`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `currencies` (
   `currency_id` int(11) NOT NULL AUTO_INCREMENT,
-  `currency_name` text NOT NULL,
+  `currency_name` varchar(255) NOT NULL,
   PRIMARY KEY (`currency_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -348,7 +348,7 @@ DROP TABLE IF EXISTS `investments`;
 CREATE TABLE `investments` (
   `investment_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`investment_id`),
   KEY `investments_fk0` (`report_id`),
@@ -402,7 +402,7 @@ DROP TABLE IF EXISTS `national_income_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `national_income_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -426,7 +426,7 @@ DROP TABLE IF EXISTS `national_incomes`;
 CREATE TABLE `national_incomes` (
   `national_income_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   `category` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`national_income_id`),
@@ -455,7 +455,7 @@ DROP TABLE IF EXISTS `operation_costs`;
 CREATE TABLE `operation_costs` (
   `operation_cost_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`operation_cost_id`),
   KEY `operation_costs_fk0` (`report_id`),
@@ -482,7 +482,7 @@ DROP TABLE IF EXISTS `other_finances`;
 CREATE TABLE `other_finances` (
   `other_finance_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`other_finance_id`),
   KEY `other_finances_fk0` (`report_id`),
@@ -510,7 +510,7 @@ DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `permission_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
-  `display_name` text NOT NULL,
+  `display_name` varchar(255) NOT NULL,
   `can_created_modules` varchar(255) NOT NULL,
   `can_read_modules` varchar(255) NOT NULL,
   `can_update_modules` varchar(255) NOT NULL,
@@ -539,7 +539,7 @@ DROP TABLE IF EXISTS `procurement_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `procurement_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -563,8 +563,8 @@ DROP TABLE IF EXISTS `procurements`;
 CREATE TABLE `procurements` (
   `procurements_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
-  `specification` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
+  `specification` varchar(255) NOT NULL,
   `volume_unit_id` int(11) NOT NULL,
   `volume_value` int(11) NOT NULL,
   `unit_price` varchar(255) NOT NULL,
@@ -574,7 +574,7 @@ CREATE TABLE `procurements` (
   `province_of_origin` varchar(255) NOT NULL,
   `district_of_origin` varchar(255) NOT NULL,
   `city_of_origin` varchar(255) NOT NULL,
-  `project_area` text DEFAULT NULL,
+  `project_area` varchar(255) DEFAULT NULL,
   `tkdn` int(11) NOT NULL,
   `tkdn_category_id` int(11) NOT NULL,
   PRIMARY KEY (`procurements_id`),
@@ -610,7 +610,7 @@ DROP TABLE IF EXISTS `profit_losses`;
 CREATE TABLE `profit_losses` (
   `profit_loss_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   `category` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`profit_loss_id`),
@@ -671,8 +671,8 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` text NOT NULL,
-  `display_name` text NOT NULL,
+  `role_name` varchar(255) NOT NULL,
+  `display_name` varchar(255) NOT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -699,7 +699,7 @@ CREATE TABLE `royalties` (
   `report_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
   `unit_rate` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `volume_unit_id` int(11) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`royalty_id`),
@@ -730,7 +730,7 @@ DROP TABLE IF EXISTS `sof_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sof_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -754,7 +754,7 @@ DROP TABLE IF EXISTS `source_of_financings`;
 CREATE TABLE `source_of_financings` (
   `source_of_financing_id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `detail` text NOT NULL,
+  `detail` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`source_of_financing_id`),
   KEY `source_of_financings_fk0` (`report_id`),
@@ -781,7 +781,7 @@ DROP TABLE IF EXISTS `terms`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `terms` (
   `term_id` int(11) NOT NULL AUTO_INCREMENT,
-  `term_name` text NOT NULL,
+  `term_name` varchar(255) NOT NULL,
   `value` int(11) NOT NULL,
   PRIMARY KEY (`term_id`),
   UNIQUE KEY `term_name` (`term_name`) USING HASH
@@ -806,7 +806,7 @@ DROP TABLE IF EXISTS `tkdn_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tkdn_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -829,7 +829,7 @@ DROP TABLE IF EXISTS `unit_price_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `unit_price_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` text NOT NULL,
+  `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -880,7 +880,7 @@ DROP TABLE IF EXISTS `volume_units`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `volume_units` (
   `volume_unit_id` int(11) NOT NULL AUTO_INCREMENT,
-  `volume_unit_text` text NOT NULL,
+  `volume_unit_text` varchar(255) NOT NULL,
   PRIMARY KEY (`volume_unit_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
