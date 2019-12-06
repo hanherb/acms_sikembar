@@ -183,6 +183,24 @@ exports.getReport = function(req, res) {
 	res.json(1);
 }
 
+exports.addReportBarang = function(req, res) {
+	let obj = {
+		user_id: req.body.user_id,
+    	year: req.body.year,
+		report_type: req.body.report_type,
+		approved: req.body.approved,
+		flagged_for_deletion: req.body.flagged_for_deletion,
+		term: req.body.term
+	};
+	mongo.mongoReportBarang("insert", obj, function(response) {
+		res.json(response);
+	});
+}
+
+exports.getReportBarang = function(req, res) {
+	res.json(1);
+}
+
 exports.addNeraca = function(req, res) {
 	let obj = {
         report_id: req.body.report_id,
@@ -326,8 +344,18 @@ exports.getAnggaranBelanja = function(req, res) {
 
 exports.addBelanjaBarang = function(req, res) {
 	let obj = {
-		data: req.body.data,
-		upload_by: req.body.upload_by
+		detail: req.body.detail,
+		specification: req.body.specification,
+		project_area: req.body.project_area,
+		tkdn: req.body.tkdn,
+		report_procurement_id: req.body.report_procurement_id,
+		country_of_origin: req.body.country_of_origin,
+		province_of_origin: req.body.province_of_origin,
+		district_of_origin: req.body.district_of_origin,
+		city_of_origin: req.body.city_of_origin,
+		qty: req.body.qty,
+		category: req.body.category,
+		unit_price: req.body.unit_price,
 	};
 	mongo.mongoBelanjaBarang("insert", obj, function(response) {
 		res.json(response);
@@ -335,9 +363,7 @@ exports.addBelanjaBarang = function(req, res) {
 }
 
 exports.getBelanjaBarang = function(req, res) {
-	mongo.mongoBelanjaBarang("find", {}, function(response) {
-		res.json(response);
-	});
+	res.json(1)
 }
 
 exports.getCommerce = function(req, res) {

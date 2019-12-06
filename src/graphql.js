@@ -4,6 +4,7 @@ var {buildSchema} = require('graphql');
 var mergeSchema = require('graphql-tools');
 var commerceGraphql = require('../plugin/commerce/commerce-graphql');
 var financeGraphql = require('../plugin/finance/finance-graphql');
+var goodsGraphql = require('../plugin/goods/goods-graphql');
 
 var defaultSchema = buildSchema(`
 	type Query {
@@ -113,6 +114,7 @@ var schemas = [];
 schemas.push(defaultSchema);
 schemas.push(commerceGraphql.schema);
 schemas.push(financeGraphql.schema);
+schemas.push(goodsGraphql.schema);
 
 exports.schema = mergeSchema.mergeSchemas({
   schemas: schemas
@@ -249,6 +251,9 @@ exports.root = {
 	assumptions: financeGraphql.root.assumptions,
 	reports: financeGraphql.root.reports,
 
+	report_procurements: goodsGraphql.root.report_procurements,
+	procurements: goodsGraphql.root.procurements,
+
 	updateUser: updateUserFunction,
 	createUser: createUserFunction,
 	deleteUser: deleteUserFunction,
@@ -282,4 +287,9 @@ exports.root = {
 	deleteAssumption: financeGraphql.root.deleteAssumption,
 	createReport: financeGraphql.root.createReport,
 	deleteReport: financeGraphql.root.deleteReport,
+
+	createReportProcurement: goodsGraphql.root.createReportProcurement,
+	deleteReportProcurement: goodsGraphql.root.deleteReportProcurement,
+	createProcurement: goodsGraphql.root.createProcurement,
+	deleteProcurement: goodsGraphql.root.deleteProcurement,
 };

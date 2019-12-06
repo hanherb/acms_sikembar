@@ -9,7 +9,6 @@ exports.add = function(req, res) {
 		qty: req.body.qty,
 		description: req.body.description,
 		category: req.body.category,
-		user: req.body.user,
 		user_id: req.body.user_id,
 		image: req.body.image
 	}
@@ -25,8 +24,7 @@ exports.update = function(req, res) {
 		price: req.body.price, 
 		tkdn: req.body.tkdn, 
 		qty: req.body.qty, 
-		description: 
-		req.body.description, 
+		description: req.body.description, 
 		category: req.body.category, 
 		image: req.body.image
 	}}];

@@ -333,6 +333,43 @@ exports.mongoKeuanganLainnya = function(action, query, callback) {
 	}
 }
 
+exports.mongoAsumsiKeuangan = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from assumptions")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into assumptions values (null, '"+query.report_id+
+			"', '"+query.unit_rate+
+			"', '"+query.detail+
+			"', '"+query.volume_value+
+			"', '"+query.price_value+
+			"', '"+query.cutoff_grade_value+
+			"', '"+query.cutoff_grade_unit+
+			"', '"+query.volume_unit+
+			"', '"+query.currency+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
 exports.mongoReport = function(action, query, callback) {
 	if(action == "find") {
 		console.log("Connection Established. Action="+action);
@@ -369,10 +406,10 @@ exports.mongoReport = function(action, query, callback) {
 	}
 }
 
-exports.mongoAsumsiKeuangan = function(action, query, callback) {
+exports.mongoBelanjaBarang = function(action, query, callback) {
 	if(action == "find") {
 		console.log("Connection Established. Action="+action);
-		pool.query("select * from assumptions")
+		pool.query("select * from procurements")
 		.then(results => {
 		    if(callback)
 				return callback(results);
@@ -385,15 +422,52 @@ exports.mongoAsumsiKeuangan = function(action, query, callback) {
 	}
 	else if(action == "insert") {
 		console.log("Connection Established. Action="+action);
-		pool.query("insert into assumptions values (null, '"+query.report_id+
-			"', '"+query.unit_rate+
-			"', '"+query.detail+
-			"', '"+query.volume_value+
-			"', '"+query.price_value+
-			"', '"+query.cutoff_grade_value+
-			"', '"+query.cutoff_grade_unit+
-			"', '"+query.volume_unit+
-			"', '"+query.currency+"')")
+		pool.query("insert into procurements values (null, '"+query.detail+
+			"', '"+query.specification+
+			"', '"+query.project_area+
+			"', "+query.tkdn+
+			", "+query.report_procurement_id+
+			", '"+query.country_of_origin+
+			"', '"+query.province_of_origin+
+			"', '"+query.district_of_origin+
+			"', '"+query.city_of_origin+
+			"', "+query.qty+
+			", '"+query.category+
+			"', "+query.unit_price+")")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}
+
+exports.mongoReportBarang = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from report_procurements")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into report_procurements values (null, "+query.user_id+
+			", '"+query.report_type+
+			"', "+query.approved+
+			", "+query.flagged_for_deletion+
+			", '"+query.term+
+			"', "+query.year+")")
 		.then(results => {
 		    if(callback)
 				return callback(results);
@@ -1073,46 +1147,38 @@ exports.mongoLogger = function(action, query, callback) {
 // 	});
 // }
 
-// exports.mongoCommerce = function(action, query, callback) {
-// 	MongoClient.connect(mongourl, function(err, db) {
-// 		if(err) {
-// 			console.log("Error: ", err);
-// 		}
-// 		else {
-// 			var dbo = db.db("sikembar");
-
-// 			if(action == "insert") {
-// 				console.log("Connection Established. Action="+action);
-// 				dbo.collection("commerce").insert(query, function(err, result) {
-// 					if(callback)
-// 						return callback(result);
-// 			    	db.close();
-// 			  	});
-// 			}
-
-// 			else if(action == "find") {
-// 				dbo.collection("commerce").find({}).toArray(function(err, result) {
-// 					if(callback)
-// 						return callback(result);
-// 			    	db.close();
-// 			  	});
-// 			}
-
-// 			else if(action == "update") {
-// 				dbo.collection("commerce").update(query[0], query[1], function(err, result) {
-// 					if(callback)
-// 						return callback(result);
-// 					db.close();
-// 				});
-// 			}
-
-// 			else if(action == "delete") {
-// 				dbo.collection("commerce").deleteOne(query, function(err, result) {
-// 					if(callback)
-// 						return callback(result);
-// 					db.close();
-// 				});
-// 			}
-// 		}
-// 	});
-// }
+exports.mongoCommerce = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from commerces")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into commerces values (null, '"+query.name+
+			"', "+query.price+
+			", "+query.tkdn+
+			", "+query.qty+
+			", '"+query.description+
+			"', '"+query.category+
+			"', "+query.user_id+
+			", '"+query.image+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+}

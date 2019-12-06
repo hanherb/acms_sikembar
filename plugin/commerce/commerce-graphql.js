@@ -4,55 +4,52 @@ var {buildSchema} = require('graphql');
 
 exports.schema = buildSchema(`
 	type Query {
-		commerce(_id: String!): Commerce,
-		commerces: [Commerce]
+		commerce(commerce_id: Int!): Commerces,
+		commerces: [Commerces]
 	},
 
-	type Commerce {
-		_id: String,
+	type Commerces {
+		commerce_id: Int,
   		name: String,
   		price: Int,
   		tkdn: Int,
   		qty: Int,
   		description: String,
   		category: String,
-  		user: String,
-  		user_id: String,
+  		user_id: Int,
   		image: String
   	},
 
   	type Mutation {
-		updateCommerce(_id: String!, input: CommerceInput): Commerce,
-		createCommerce(input: CommerceInput): Commerce,
-		deleteCommerce(_id: String!): Commerce
+		updateCommerce(commerce_id: Int!, input: CommercesInput): Commerces,
+		createCommerce(input: CommercesInput): Commerces,
+		deleteCommerce(commerce_id: Int!): Commerces
 	},
 
-	input CommerceInput {
-		_id: String,
+	input CommercesInput {
+		commerce_id: Int,
   		name: String,
   		price: Int,
   		tkdn: Int,
   		qty: Int,
   		description: String,
   		category: String,
-  		user: String,
-  		user_id: String,
+  		user_id: Int,
   		image: String
   	}
 `);
 
 var commerces = [];
-// mongo.mongoCommerce("find", {}, function(response) {
-// 	for(var i = 0; i < response.length; i++) {
-// 		response[i]._id = response[i]._id.toString();
-// 		commerces.push(response[i]);
-// 	}
-// });
+mongo.mongoCommerce("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		commerces.push(response[i]);
+	}
+});
 
-var getCommerce = function(args) {
-	var itemId = args._id;
+var getCommerce = function(commerce_id) {
+	var commerceId = args.commerce_id;
   	for(var i = 0; i < commerces.length; i++) {
-	  	if(itemId == commerces[i]._id) {
+	  	if(commerceId == commerces[i].commerce_id) {
 	  		return commerces[i];
 	  	}
 	}
@@ -62,41 +59,11 @@ var getCommerces = function() {
 	return commerces;
 }
 
-var updateCommerceFunction = function({_id, input}) {
-	var itemId = _id;
+var updateCommerceFunction = function({commerce_id, input}) {
+	var commerceId = commerce_id;
   	for(var i = 0; i < commerces.length; i++) {
-	  	if(itemId == commerces[i]._id) {
-	  		let id = commerces[i]._id;
-	  		let name = commerces[i].name;
-	  		let price = commerces[i].price;
-	  		let tkdn = commerces[i].tkdn;
-	  		let qty = commerces[i].qty;
-	  		let description = commerces[i].description;
-	  		let category = commerces[i].category;
-	  		let user = commerces[i].user;
-	  		let user_id = commerces[i].user_id;
-	  		let image = commerces[i].image;
-	  		commerces[i] = input;
-	  		if(commerces[i]._id == undefined)
-	  			commerces[i]._id = id;
-	  		if(commerces[i].name == undefined)
-	  			commerces[i].name = name;
-	  		if(commerces[i].price == undefined)
-	  			commerces[i].price = price;
-	  		if(commerces[i].tkdn == undefined)
-	  			commerces[i].tkdn = tkdn;
-	  		if(commerces[i].qty == undefined)
-	  			commerces[i].qty = qty;
-	  		if(commerces[i].description == undefined)
-	  			commerces[i].description = description;
-	  		if(commerces[i].category == undefined)
-	  			commerces[i].category = category;
-	  		if(commerces[i].user == undefined)
-	  			commerces[i].user = user;
-	  		if(commerces[i].user_id == undefined)
-	  			commerces[i].user_id = user_id;
-	  		if(commerces[i].image == undefined)
-	  			commerces[i].image = image;
+	  	if(commerceId == commerces[i]._id) {
+	  		commerces[i] = inpu;
 	  		return input;
 	  	}
 	}
@@ -107,12 +74,12 @@ var createCommerceFunction = function({input}) {
 	return input;
 }
 
-var deleteCommerceFunction = function({_id}) {
-	var itemId = _id;
+var deleteCommerceFunction = function({commerce_id}) {
+	var commerceId = commerce_id;
   	for(var i = 0; i < commerces.length; i++) {
-	  	if(itemId == commerces[i]._id) {
+	  	if(commerceId == commerces[i].commerce_id) {
 	  		commerces.splice(i, 1);
-	  		return commerces[i]._id;
+	  		return commerces[i].commerce_id;
 	  	}
 	}
 }
