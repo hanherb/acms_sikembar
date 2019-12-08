@@ -22,7 +22,7 @@ exports.schema = buildSchema(`
     procurements_id: Int!
     report_procurement_id: Int!
     detail: String!
-    specification: String!
+    specification: String
     unit_price: Int!
     category: String!
     country_of_origin: String
@@ -31,7 +31,7 @@ exports.schema = buildSchema(`
     city_of_origin: String
     qty: Int!
     project_area: String
-    tkdn: Int!
+    tkdn: Float!
   },
 
 	type Mutation {
@@ -55,7 +55,7 @@ exports.schema = buildSchema(`
     procurements_id: Int!
     report_procurement_id: Int!
     detail: String!
-    specification: String!
+    specification: String
     unit_price: Int!
     category: String!
     country_of_origin: String
@@ -64,7 +64,7 @@ exports.schema = buildSchema(`
     city_of_origin: String
     qty: Int!
     project_area: String
-    tkdn: Int!
+    tkdn: Float!
   },
 `);
 

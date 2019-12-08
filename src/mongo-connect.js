@@ -17,7 +17,7 @@ exports.mongoUser = function(action, query, callback) {
 	}
 	else if(action == "insert") {
 		console.log("Connection Established. Action="+action);
-		pool.query("insert into users values (null, '"+query.username+"', '"+query.password+"', null, '"+query.role+"')")
+		pool.query("insert into users values (null, '"+query.username+"', '"+query.password+"', '"+query.role+"', '"+query.fullname+"', '"+query.company_type+"')")
 		.then(results => {
 		    if(callback)
 				return callback(results);
@@ -70,6 +70,61 @@ exports.mongoUser = function(action, query, callback) {
 		    //handle error
 		});
 	}
+}
+
+exports.mongoUserDetail = function(action, query, callback) {
+	if(action == "find") {
+		console.log("Connection Established. Action="+action);
+		pool.query("select * from user_details")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+	else if(action == "insert") {
+		console.log("Connection Established. Action="+action);
+		pool.query("insert into user_details values (null, "+query.user_id+
+			", '"+query.company_id+
+			"', '"+query.company_name+
+			"', '"+query.type+
+			"', '"+query.company_address+
+			"', '"+query.npwp+
+			"', '"+query.email+
+			"', '"+query.wiup+
+			"', '"+query.license_type+
+			"', '"+query.license_status+
+			"', '"+query.province_code+
+			"', '"+query.province+
+			"', '"+query.commodity+"')")
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
+
+	else if(action == "delete") {
+		console.log("Connection Established. Action="+action);
+		pool.query("delete from user_details where user_detail_id = "+query.user_detail_id)
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});		
+  	}
 }
 
 exports.mongoNeraca = function(action, query, callback) {

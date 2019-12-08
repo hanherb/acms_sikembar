@@ -22,6 +22,8 @@ router.route('/').get(function(req, res) {rf.redirectIndex(req, res)});
 
 router.route('/get-user').get(function(req, res) {rf.getUser(req, res)});
 
+router.route('/get-user-detail').get(function(req, res) {rf.getUserDetail(req, res)});
+
 router.route('/get-user-public').get(function(req, res) {rf.getUser(req, res)});
 
 router.route('/get-log').get(function(req, res) {rf.getLog(req, res)});
@@ -37,6 +39,12 @@ router.route('/create-user').post(function(req, res) {rf.registerUser(req, res)}
 router.route('/update-user').post(function(req, res) {rf.updateUser(req, res)});
 
 router.route('/delete-user').post(function(req, res) {rf.deleteUser(req, res)});
+
+router.route('/create-user-detail').post(function(req, res) {rf.registerUserDetail(req, res)});
+
+router.route('/update-user-detail').post(function(req, res) {rf.updateUserDetail(req, res)});
+
+router.route('/delete-user-detail').post(function(req, res) {rf.deleteUserDetail(req, res)});
 
 router.route('/post-picture').post(upload.single('profile_picture'), function(req, res) {rf.postPicture(req, res)});
 

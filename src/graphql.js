@@ -10,6 +10,7 @@ var defaultSchema = buildSchema(`
 	type Query {
 		user(user_id: Int!): Users,
 		users: [Users],
+		user_details: [UserDetails],
 		logs: [Log],
 		roles: [Roles],
 		permission(permission_id: ID!): Permissions,
@@ -41,6 +42,23 @@ var defaultSchema = buildSchema(`
         role: String
     },
 
+    type UserDetails{
+    	user_detail_id: Int!
+        user_id: Int!
+		company_id: String
+		company_name: String
+		type: String
+		company_address: String
+		npwp: String
+		email: String
+		wiup: String
+		license_type: String
+		license_status: String
+		province_code: String
+		province: String
+		commodity: String
+    },
+
 	type Roles{
         role_id: ID!
         role_name: String!
@@ -66,6 +84,9 @@ var defaultSchema = buildSchema(`
 		updateUser(user_id: Int!, input: UsersInput): Users,
 		createUser(input: UsersInput): Users,
 		deleteUser(user_id: Int!): Users,
+		updateUserDetail(user_detail_id: Int!, input: UserDetailsInput): UserDetails,
+		createUserDetail(input: UserDetailsInput): UserDetails,
+		deleteUserDetail(user_detail_id: Int!): UserDetails,
 		createLog(input: LogInput): Log,
 		updatePlugin(name: String!, input: PluginInput): Plugin,
 		createPlugin(input: PluginInput): Plugin,
@@ -81,6 +102,23 @@ var defaultSchema = buildSchema(`
         company_type: String
         role: String
   	},
+
+  	input UserDetailsInput{
+    	user_detail_id: Int!
+        user_id: Int!
+		company_id: String
+		company_name: String
+		type: String
+		company_address: String
+		npwp: String
+		email: String
+		wiup: String
+		license_type: String
+		license_status: String
+		province_code: String
+		province: String
+		commodity: String
+    },
 
   	input LogInput {
   		log_id: Int,
@@ -127,6 +165,13 @@ mongo.mongoUser("find", {}, function(response) {
 	}
 });
 
+var user_details = [];
+mongo.mongoUserDetail("find", {}, function(response) {
+	for(var i = 0; i < response.length; i++) {
+		user_details.push(response[i]);
+	}
+});
+
 var logs = [];
 mongo.mongoLogger("find", {}, function(response) {
 	for(var i = 0; i < response.length; i++) {
@@ -159,6 +204,10 @@ var getUser = function(args) {
 
 var getUsers = function() {
 	return users;
+}
+
+var getUserDetails = function() {
+	return user_details;
 }
 
 var getLogs = function() {
@@ -207,6 +256,31 @@ var deleteUserFunction = function({user_id}) {
 	}
 }
 
+var updateUserDetailFunction = function({user_detail_id, input}) {
+	var userDetailId = user_detail_id;
+  	for(var i = 0; i < user_details.length; i++) {
+	  	if(userDetailId == user_details[i].user_detail_id) {
+	  		user_details[i] = input;
+	  		return input;
+	  	}
+	}
+}
+
+var createUserDetailFunction = function({input}) {
+	user_details.push(input);
+	return input;
+}
+
+var deleteUserDetailFunction = function({user_detail_id}) {
+	var userDetailId = user_detail_id;
+  	for(var i = 0; i < user_details.length; i++) {
+	  	if(userDetailId == user_details[i].user_detail_id) {
+	  		user_details.splice(i, 1);
+	  		return "deleted";
+	  	}
+	}
+}
+
 var createLogFunction = function({input}) {
 	logs.push(input);
 	return input;
@@ -231,6 +305,7 @@ var updatePluginFunction = function({name, input}) {
 exports.root = {
 	user: getUser,
 	users: getUsers,
+	user_details: getUserDetails,
 	logs: getLogs,
 	roles: getRoles,
 	plugin: getPlugin,
@@ -257,6 +332,9 @@ exports.root = {
 	updateUser: updateUserFunction,
 	createUser: createUserFunction,
 	deleteUser: deleteUserFunction,
+	updateUserDetail: updateUserDetailFunction,
+	createUserDetail: createUserDetailFunction,
+	deleteUserDetail: deleteUserDetailFunction,
 	createLog: createLogFunction,
 	createPlugin: createPluginFunction,
 	updatePlugin: updatePluginFunction,

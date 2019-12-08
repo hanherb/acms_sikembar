@@ -22,6 +22,10 @@ exports.getUser = function(req, res) {
 	res.json(1);
 }
 
+exports.getUserDetail = function(req, res) {
+	res.json(1);
+}
+
 exports.getLog = function(req, res) {
 	mongo.mongoLogger("find", {}, function(response) {
 		res.json(response);
@@ -55,6 +59,38 @@ exports.updateUser = function(req, res) {
 exports.deleteUser = function(req, res) {
 	let query = {user_id: req.body.user_id};
 	mongo.mongoUser("delete", query, function(response) {
+		res.json(response);
+	});
+}
+
+exports.createUserDetail = function(req, res) {
+	registerPlugin.createUserDetail(req, res);
+}
+
+exports.updateUserDetail = function(req, res) {
+	let query = [{user_detail_id: req.body.user_detail_id}, {
+		user_id: req.body.user_id,
+		company_id: req.body.company_id,
+		company_name: req.body.company_name,
+		type: req.body.type,
+		company_address: req.body.company_address,
+		npwp: req.body.npwp,
+		email: req.body.email,
+		wiup: req.body.wiup,
+		license_type: req.body.license_type,
+		license_status: req.body.license_status,
+		province_code: req.body.province_code,
+		province: req.body.province,
+		commodity: req.body.commodity
+	}];
+	mongo.mongoUserDetail("update", query, function(response) {
+		res.json(response);
+	});
+}
+
+exports.deleteUserDetail = function(req, res) {
+	let query = {user_detail_id: req.body.user_detail_id};
+	mongo.mongoUserDetail("delete", query, function(response) {
 		res.json(response);
 	});
 }
