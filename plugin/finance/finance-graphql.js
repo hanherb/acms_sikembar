@@ -200,6 +200,7 @@ exports.schema = buildSchema(`
 		createAssumption(input: AssumptionsInput): Assumptions,
 		deleteAssumption(assumption_id: Int!): Assumptions,
 		createReport(input: ReportsInput): Reports,
+		updateReport(report_id:Int!, input: ReportsInput): Reports,
 		deleteReport(report_id: Int!): Reports,
 	},
 
@@ -574,6 +575,16 @@ var createReportFunction = function({input}) {
 	return input;
 }
 
+var updateReportFunction = function({report_id, input}) {
+	var reportId = report_id;
+  	for(var i = 0; i < reports.length; i++) {
+	  	if(reportId == reports[i].report_id) {
+	  		reports[i] = input;
+	  		return input;
+	  	}
+	}
+}
+
 var deleteReportFunction = function({report_id}) {
 	var reportId = report_id;
   	for(var i = 0; i < reports.length; i++) {
@@ -617,5 +628,6 @@ exports.root = {
 	createAssumption: createAssumptionFunction,
 	deleteAssumption: deleteAssumptionFunction,
 	createReport: createReportFunction,
+	updateReport: updateReportFunction,
 	deleteReport: deleteReportFunction,
 };

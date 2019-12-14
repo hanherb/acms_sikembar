@@ -459,6 +459,26 @@ exports.mongoReport = function(action, query, callback) {
 		    //handle error
 		});
 	}
+	else if(action == "update") {
+		console.log("Connection Established. Action="+action);
+		pool.query("update reports set user_id = "+query.user_id+
+			", report_type = '"+query.report_type+
+			"', rate = '"+query.rate+
+			"', approved = '"+query.approved+
+			"', flagged_for_deletion = '"+query.flagged_for_deletion+
+			"', term = '"+query.term+
+			"', currency = '"+query.currency+
+			"', year = "+query.year+" where report_id = "+query.report_id)
+		.then(results => {
+		    if(callback)
+				return callback(results);
+		    console.log(results);
+		})
+		.catch(err => {
+		  	console.log(err)
+		    //handle error
+		});
+	}
 }
 
 exports.mongoBelanjaBarang = function(action, query, callback) {

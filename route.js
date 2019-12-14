@@ -66,6 +66,8 @@ router.route('/get-report').get(function(req, res) {rf.getReport(req, res)});
 
 router.route('/add-report').post(function(req, res) {rf.addReport(req, res)});
 
+router.route('/update-report').post(function(req, res) {rf.updateReport(req, res)});
+
 router.route('/get-report-barang').get(function(req, res) {rf.getReportBarang(req, res)});
 
 router.route('/add-report-barang').post(function(req, res) {rf.addReportBarang(req, res)});

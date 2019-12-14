@@ -364,6 +364,7 @@ exports.root = {
 	createAssumption: financeGraphql.root.createAssumption,
 	deleteAssumption: financeGraphql.root.deleteAssumption,
 	createReport: financeGraphql.root.createReport,
+	updateReport: financeGraphql.root.updateReport,
 	deleteReport: financeGraphql.root.deleteReport,
 
 	createReportProcurement: goodsGraphql.root.createReportProcurement,

@@ -215,6 +215,23 @@ exports.addReport = function(req, res) {
 	});
 }
 
+exports.updateReport = function(req, res) {
+	let obj = {
+		report_id: req.body.report_id,
+		user_id: req.body.user_id,
+    	year: req.body.year,
+		report_type: req.body.report_type,
+		rate: req.body.rate,
+		approved: req.body.approved,
+		flagged_for_deletion: req.body.flagged_for_deletion,
+		term: req.body.term,
+		currency: req.body.currency
+	};
+	mongo.mongoReport("update", obj, function(response) {
+		res.json(response);
+	});
+}
+
 exports.getReport = function(req, res) {
 	res.json(1);
 }
